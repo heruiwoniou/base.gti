@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="428eced0-57e5-490a-bc88-39a545b54ece" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_Runtime/Static/js/libs" afterPath="$PROJECT_DIR$/_Runtime/Static/js/libs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="428eced0-57e5-490a-bc88-39a545b54ece" name="Default" comment="" />
     <ignored path="server.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
