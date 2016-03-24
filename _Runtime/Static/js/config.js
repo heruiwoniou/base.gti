@@ -10,13 +10,8 @@ require.config({
     },
     paths: {
         "jquery": "libs/jquery/dist/jquery.min",
-
-        "Core":"common/core/Core",
         "Class":"common/core/Class"
-    },
-    deps:[
-        "Class"
-    ]
+    }
 });
 
 require(["jquery","application"],function($,application){

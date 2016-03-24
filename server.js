@@ -18,7 +18,7 @@ var server = http.createServer(function (request, response) {
 	if (pathname.charAt(pathname.length - 1) == "/") {
 		pathname += "index.html";
 	}
-	var realPath = path.join("_Runtime", pathname);
+	var realPath = path.join("Runtime", pathname);
 	var ext = path.extname(realPath);
 	ext = ext ? ext.slice(1) : 'unknown';
 
