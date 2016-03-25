@@ -13,7 +13,8 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     jshint=require('gulp-jshint'),
     clean = require('gulp-clean'),
-    uglify=require('gulp-uglify');
+    uglify=require('gulp-uglify'),
+    requirejsoptimize=require('gulp-requirejs-optimize');
 
 gulp.task('build-css', function () {
     gulp.src('_Runtime/Static/style/**/*.less')
@@ -27,17 +28,13 @@ gulp.task('build-css', function () {
 });
 
 gulp.task('build-script', function () {
-    gulp.src(['_Runtime/Static/js/**/*.js','!_Runtime/Static/js/libs/**/*.js','!_Runtime/Static/js/config.js'])
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
-        .pipe(uglify())
-        .pipe(gulp.dest("Runtime/Static/js/"));
-
     gulp.src('_Runtime/Static/js/**/*.js')
         .pipe(amdoptimize('application', {
+                baseUrl:"_Runtime/Static/js",
                 paths: {
                     "jquery": "libs/jquery/dist/jquery.min",
-                    "Class":"common/core/Class"
+                    "Class":"common/core/Class",
+                    "system":"../../Content"
                 },
                 exclude: ['jquery']
             }
@@ -45,9 +42,29 @@ gulp.task('build-script', function () {
         .pipe(concat("application.js"))
         .pipe(gulp.dest("Runtime/Static/js"));
 
+    gulp.src(['_Runtime/Content/**/*.js'])
+        .pipe(amdoptimize('../../Content/b', {
+                baseUrl:"_Runtime/Static/js",
+                paths: {
+                    "jquery": "libs/jquery/dist/jquery.min",
+                    "Class":"common/core/Class",
+                    "system":"../../Content"
+                },
+                exclude: ['jquery']
+            }
+        ))
+        .pipe(concat("b.js"))
+        .pipe(gulp.dest("Runtime/Content"));
+
     gulp.src('_Runtime/Static/js/config.js')
         .pipe(gulp.dest('Runtime/Static/js/'));
 
+});
+
+gulp.task('build-html',function(){
+    /*build html*/
+    gulp.src(['_Runtime/**/*.html','!_Runtime/Static/**/*.html'])
+        .pipe(gulp.dest('Runtime/'));
 })
 
 gulp.task('clean', function() {
@@ -55,9 +72,10 @@ gulp.task('clean', function() {
         .pipe(clean({force: true}));
 });
 
-gulp.task('develop',['clean'],function(){
-
-    gulp.run('build-css','build-script');
+gulp.task('develop',
+    ['clean'],
+    function(){
+    gulp.run('build-css','build-script','build-html');
 
     /*build library*/
     gulp.src('_Runtime/Static/js/libs/jquery/dist/jquery.min.js')
@@ -77,7 +95,7 @@ gulp.task('develop',['clean'],function(){
         .pipe(gulp.dest('Runtime/'));
 
     /*add listener*/
-    gulp.watch('_Runtime/Static/js/**/*.js', function () {
+    gulp.watch('_Runtime/**/*.js', function () {
         gulp.run('build-script');
     });
     gulp.watch(['_Runtime/Static/style/**/*.less','_Runtime/Static/**/*.css'],function(){
