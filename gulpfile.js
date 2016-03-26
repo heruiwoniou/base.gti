@@ -14,17 +14,17 @@ var gulp = require('gulp'),
     jshint=require('gulp-jshint'),
     clean = require('gulp-clean'),
     uglify=require('gulp-uglify'),
-    requirejsoptimize=require('gulp-requirejs-optimize');
+    requirejsoptimize=require('gulp-requirejs-optimize'),
+    livereload=require('gulp-livereload');
+
+
 
 gulp.task('build-css', function () {
-    gulp.src('_Runtime/Static/style/**/*.less')
+    gulp.src(['_Runtime/**/*.less','!_Runtime/Static/*'])
         .pipe(less())
         .pipe(cleancss())
-        .pipe(gulp.dest('Runtime/Static/style'));
-
-    gulp.src('_Runtime/Static/**/*.css')
-        .pipe(cleancss())
-        .pipe(gulp.dest('Runtime/Static/'));
+        .pipe(gulp.dest('Runtime/'))
+        .pipe(livereload());
 });
 
 gulp.task('build-script', function () {
@@ -40,31 +40,21 @@ gulp.task('build-script', function () {
             }
         ))
         .pipe(concat("application.js"))
-        .pipe(gulp.dest("Runtime/Static/js"));
+        .pipe(gulp.dest("Runtime/Static/js"))
+        .pipe(livereload());
 
-    gulp.src(['_Runtime/Content/**/*.js'])
-        .pipe(amdoptimize('../../Content/b', {
-                baseUrl:"_Runtime/Static/js",
-                paths: {
-                    "jquery": "libs/jquery/dist/jquery.min",
-                    "Class":"common/core/Class",
-                    "system":"../../Content"
-                },
-                exclude: ['jquery']
-            }
-        ))
-        .pipe(concat("b.js"))
-        .pipe(gulp.dest("Runtime/Content"));
 
     gulp.src('_Runtime/Static/js/config.js')
-        .pipe(gulp.dest('Runtime/Static/js/'));
+        .pipe(gulp.dest('Runtime/Static/js/'))
+        .pipe(livereload());
 
 });
 
 gulp.task('build-html',function(){
     /*build html*/
     gulp.src(['_Runtime/**/*.html','!_Runtime/Static/**/*.html'])
-        .pipe(gulp.dest('Runtime/'));
+        .pipe(gulp.dest('Runtime/'))
+        .pipe(livereload());
 })
 
 gulp.task('clean', function() {
@@ -98,9 +88,14 @@ gulp.task('develop',
     gulp.watch('_Runtime/**/*.js', function () {
         gulp.run('build-script');
     });
-    gulp.watch(['_Runtime/Static/style/**/*.less','_Runtime/Static/**/*.css'],function(){
+    gulp.watch(['_Runtime/**/*.less','!_Runtime/Static/*'],function(){
         gulp.run('build-css');
-    })
+    });
+        gulp.watch(['_Runtime/**/*.html','!_Runtime/Static/**/*.html'],function(){
+            gulp.run('build-html');
+        })
+
+        livereload.listen();
 });
 
 gulp.task('default', function () {
