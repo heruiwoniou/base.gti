@@ -1,0 +1,18 @@
+{
+  "name": "sl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "server": "ss-server run -r runtime",
+    "watch": "gulp"
+  },
+  "devDependencies": {
+    "autoprefixer-stylus": "^0.9.3",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-stylus": "^2.3.1"
+  }
+}

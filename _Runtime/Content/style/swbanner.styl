@@ -1,0 +1,215 @@
+html,body
+	padding 0
+	margin 0
+	height 100%
+	background #333333
+	*
+		font-family 'Microsoft Yahei'
+.swbanner-control
+	height 100%
+	position relative
+	overflow hidden
+	text-align center
+	&>*
+		opacity 0
+	&:before
+		opacity 1
+		content ' '
+		display inline-block
+		vertical-align middle
+		height 100%
+		width 1px
+	&:after
+		content '控件正在加载中请稍候...'
+		color white
+		display inline-block
+		vertical-align middle
+	&.created
+		text-align left
+		&>*
+			opacity 1
+	.controlbar-message
+		width 80%
+		height 50px
+		text-align right
+		margin 0 auto
+		text-align right
+		line-height 50px
+		padding 0 10px
+		ul
+			display inline-block
+			vertical-align middle
+			margin 0
+			padding 0
+			white-space nowrap
+			li
+				list-style none
+				background  #333333 + 20%
+				color white
+				height 30px
+				line-height 30px
+				box-sizing content-box
+				padding 0 20px
+				margin 0
+				margin-left 10px
+				font-size 12px
+				cursor pointer
+				display inline-block
+				vertical-align middle
+				transition background-color .2s ease
+				border-radius 4px
+				&:hover
+					color black - 20%
+					background-color white - 10%
+	.swbanner-view
+		position absolute
+		left 0
+		top 0
+		right 0
+		bottom 220px
+		background #333333
+		overflow hidden
+		.zoom-panel
+			width 80px
+			height 30px
+			line-height 30px
+			position absolute
+			left 50%
+			top 50%
+			margin-top -15px
+			margin-left -40px
+			background rgba(0,0,0,.5)
+			border-radius 5px
+			color white
+			font-size 16px
+			text-align center
+			display none
+		img
+			display none
+			border 0
+			position absolute
+			left 0
+			top 0
+			box-shadow 0 0 15px 5px black+10%
+		.swbanner-message
+			transition padding-top .2s ease , padding-bottom .2s ease
+			position absolute
+			bottom 0
+			left 0
+			right 0
+			background rgba(0,0,0,.6)
+			color white
+			word-break break-all
+			text-indent 42px;
+			line-height: 21px
+			font-size 12px
+			&.display
+				padding 10px
+		.arrow-big-left
+		.arrow-big-right
+			width 50px
+			height 100%
+			position absolute
+			cursor pointer
+			opacity 0
+			transition opacity .2s ease
+			&:before
+				position absolute
+				display block
+				content ' '
+				top 50%
+				margin-top -60px
+				width 24px
+				height 80px
+				left 50%
+				transition margin-left .2s ease
+			&:hover
+				opacity 1
+				&:before
+					margin-left -12px
+					background-position-y bottom
+		.arrow-big-left
+			left 0
+			&:before
+				margin-left 0
+				background url(images/arry-big.png) left top no-repeat
+		.arrow-big-right
+			right 0
+			&:before
+				margin-left -24px
+				background url(images/arry-big.png) right top no-repeat
+	.swbanner-banner
+		position absolute
+		bottom 0
+		left 0
+		right 0
+		height 220px
+		background #333333
+		text-align center
+		line-height 130px
+		font-size 0
+		border-top 1px solid #333333 - 20%
+		.arrow-left
+		.arrow-right
+			display inline-block;
+			vertical-align middle
+			height 130px
+			width 40px
+			background transparent
+			line-height 130px
+			text-align center
+			cursor pointer
+			&:before
+				opacity .6
+				display inline
+				font-size 18px
+				color white
+			&:hover:before
+				opacity 1
+		.arrow-left:before
+			content "<"
+		.arrow-right:before
+			content ">"
+		.swbanner-shrunken-container
+			transition all .2s ease
+			display inline-block;
+			vertical-align middle
+			max-width 80%
+			height 130px
+			font-size 0
+			text-align left
+			line-height 130px
+			white-space nowrap
+			overflow hidden
+			.swbanner-shrunken-item
+				position relative
+				line-height 130px
+				display inline-block
+				width 180px
+				height 130px
+				margin-right 10px
+				background #333 + 10%
+				overflow hidden
+				cursor pointer
+				&:before
+					position absolute
+					left 0
+					right 0
+					bottom 0
+					top 0
+					background black
+					content ''
+					z-index 1
+					transition opacity .2s ease
+					opacity .5
+				&:hover:before
+					opacity .1
+				&.current:before
+					opacity 0
+				img
+					border 0
+					position absolute
+					left 50%
+					top 50%
+			.swbanner-shrunken-item:last-child
+				margin-right 0
