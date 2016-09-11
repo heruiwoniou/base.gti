@@ -1,0 +1,24 @@
+{
+  "name": "rollup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-eslint": "^2.0.0",
+    "gulp-rollup": "^1.9.0",
+    "gulp-sourcemaps": "^1.6.0",
+
+    "babel-eslint": "^6.0.4",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "rollup-plugin-babel": "^2.4.0"
+
+  }
+}

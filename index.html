@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="node_modules/moment/moment.js"></script>
+	<script type="text/javascript" src="dist/index.js"></script>
+</head>
+<body>
+<div id="calendar"></div>
+<script type="text/javascript">
+	var calendar = new Calendar('#calendar', [2016,9], {
+		render:{
+			after:function(){
+				console.log(3);
+			}
+		}
+	})
+</script>
+</body>
+<div class="calendar">
+	<h1 class="title-panel"></h1>
+	<div class="calendar-panel"></div>
+	<div class="schedule-panel"></div>
+</div>
+</html>
