@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="dist/style/css.css">
-    <link rel="stylesheet" href="dist/style/schedule.css">
     <link rel="stylesheet" href="dist/style/extend.css">
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="node_modules/moment/moment.js"></script>
@@ -18,22 +17,31 @@
             height: 100%;
         }
         
-        #schedule {
+        #calendar {
             margin: 0 auto;
         }
     </style>
 </head>
 
 <body>
-    <div id="schedule"></div>
+    <div id="calendar"></div>
     <script type="text/javascript">
-        var schedule = new Schedule('#schedule', [2016, 9], {
+        var calendar = new Calendar('#calendar', [2016, 9], {
             theadHeight: 50,
             titleHeight: 100,
             width: 1000,
             cellHeight: 100
         });
+        calendar.oncellrendering = function(date, txt) {
+            return txt;
+        }
+        calendar.render()
     </script>
 </body>
+<!--<div class="calendar">
+	<h1 class="title-panel"></h1>
+	<div class="calendar-panel"></div>
+	<div class="schedule-panel"></div>
+</div>-->
 
 </html>

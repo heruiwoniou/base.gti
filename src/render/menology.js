@@ -1,4 +1,5 @@
 import moment from 'moment';
+import $ from 'jQuery';
 
 export default function Menology(context) {
     let cal = context.el.querySelector('.calendar-panel');
@@ -28,7 +29,9 @@ export default function Menology(context) {
         td = document.createElement('td');
         let current_date = start_date.add(1, 'day');
         var cm = current_date.month() + 1;
-        $(td).append(context.events.cell.rendering.call(context, moment(current_date), current_date.date()))
+        $(td).append(
+            context.events.cell.rendering.call(context, moment(current_date), current_date.date())
+        )
         td.className = cm == month ? 'c' : 'o';
         tr.appendChild(td);
         if (i % 7 == 0 && i < cells) {
