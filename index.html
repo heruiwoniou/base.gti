@@ -1,27 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
-	<script type="text/javascript" src="node_modules/moment/moment.js"></script>
-	<script type="text/javascript" src="dist/index.js"></script>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="dist/style/css.css">
+    <link rel="stylesheet" href="dist/style/extend.css">
+    <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="node_modules/moment/moment.js"></script>
+    <script type="text/javascript" src="dist/index.js"></script>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+        
+        #calendar {
+            margin: 0 auto;
+        }
+    </style>
 </head>
+
 <body>
-<div id="calendar"></div>
-<script type="text/javascript">
-	var calendar = new Calendar('#calendar', [2016,9], {
-		render:{
-			after:function(){
-				console.log(3);
-			}
-		}
-	})
-</script>
+    <div id="calendar"></div>
+    <script type="text/javascript">
+        var calendar = new Calendar('#calendar', [2016, 9], {
+            theadHeight: 50,
+            titleHeight: 100,
+            width: 1000,
+            cellHeight: 100
+        });
+        calendar.oncellrendering = function(date, txt) {
+            return txt;
+        }
+        calendar.render()
+    </script>
 </body>
-<div class="calendar">
+<!--<div class="calendar">
 	<h1 class="title-panel"></h1>
 	<div class="calendar-panel"></div>
 	<div class="schedule-panel"></div>
-</div>
+</div>-->
+
 </html>
