@@ -24,10 +24,19 @@ class Calendar {
         this.events = {
             cell: {
                 rendering: function(date, txt) { return txt; }
-            }
+            },
+            rendered: function() {}
         }
 
         set_options.call(this, date, options);
+    }
+
+    get cellHeight() {
+        return (this.options.cellHeight === null ? this.width / 7 : this.options.cellHeight);
+    }
+
+    get cellWidth() {
+        return this.width / 7;
     }
 
     /**
@@ -50,9 +59,13 @@ class Calendar {
     /**
      * 设置事件
      */
-    set oncellrendering(rendering) {
-        if (typeof rendering !== 'function') throw new Error('must a function key');
-        this.events.cell.rendering = rendering;
+    set oncellrendering(cellrendering) {
+        if (typeof cellrendering !== 'function') throw new Error('must a function key');
+        this.events.cell.rendering = cellrendering;
+    }
+    set onrendered(rendered) {
+        if (typeof rendered !== 'function') throw new Error('must a function key');
+        this.events.rendered = rendered;
     }
 
     next() {
@@ -77,6 +90,8 @@ class Calendar {
         Body(this);
         Header(this);
         Menology(this);
+
+        this.events.rendered.apply(this);
     }
 }
 export default Calendar;

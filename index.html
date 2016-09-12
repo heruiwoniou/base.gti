@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="dist/style/css.css">
     <link rel="stylesheet" href="dist/style/schedule.css">
     <link rel="stylesheet" href="dist/style/extend.css">
-    <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
     <script type="text/javascript" src="node_modules/moment/moment.js"></script>
     <script type="text/javascript" src="dist/index.js"></script>
     <style>
@@ -27,12 +29,72 @@
 <body>
     <div id="schedule"></div>
     <script type="text/javascript">
-        var schedule = new Schedule('#schedule', [2016, 9], {
+        var date = new Date();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+        var schedule = new Schedule('#schedule');
+
+        schedule.render(date, {
             theadHeight: 50,
             titleHeight: 100,
             width: 1000,
-            cellHeight: 100
-        });
+            cellHeight: 100,
+            events: [{
+                title: '备课',
+                start: new Date(y, m, 1)
+            }, {
+                title: '上课',
+                start: new Date(y, m, 1)
+            }, {
+                title: '教学总结',
+                start: new Date(y, m, 1)
+            }, {
+                title: 'aaa',
+                start: new Date(y, m, 1)
+            }, {
+                title: 'cc',
+                start: new Date(y, m, 1)
+            }, {
+                title: 'bbb',
+                start: new Date(y, m, 1)
+            }, {
+                title: '备课',
+                start: new Date(y, m, 6)
+            }, {
+                title: '上课',
+                start: new Date(y, m, 6)
+            }, {
+                title: '教学总结',
+                start: new Date(y, m, 6)
+            }, {
+                title: '备课',
+                start: new Date(y, m, 8)
+            }, {
+                title: '上课',
+                start: new Date(y, m, 8)
+            }, {
+                title: '教学总结',
+                start: new Date(y, m, 8)
+            }, {
+                title: '备课',
+                start: new Date(y, m, 12)
+            }, {
+                title: '上课',
+                start: new Date(y, m, 12)
+            }, {
+                title: '教学总结',
+                start: new Date(y, m, 12)
+            }, {
+                title: '上课',
+                start: new Date(y, m, 15)
+            }, {
+                title: '备课',
+                start: new Date(y, m, 15)
+            }, {
+                title: '教学总结',
+                start: new Date(y, m, 15)
+            }]
+        })
     </script>
 </body>
 

@@ -5,12 +5,13 @@ export default function Menology(context) {
     let cal = context.el.querySelector('.calendar-panel');
     let init = cal == null;
     cal = cal || document.createElement('div');
+    let $cal = $(cal);
     let table = document.createElement('table');
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
     thead.innerHTML = '<tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr>';
     thead.style.lineHeight = context.options.theadHeight + 'px';
-    tbody.style.lineHeight = (context.options.cellHeight === null ? context.width / 7 : context.options.cellHeight) + 'px'
+    tbody.style.lineHeight = context.cellHeight + 'px'
 
     let year = context.date.year();
     let month = context.date.month() + 1;
@@ -42,9 +43,9 @@ export default function Menology(context) {
 
     table.appendChild(thead);
     table.appendChild(tbody);
-    cal.innerHTML = table.outerHTML;
+    $cal.empty().append(table);
     if (init) {
-        cal.className = 'calendar-panel';
-        context.el.appendChild(cal);
+        $cal.addClass('calendar-panel');
+        context.el.appendChild($cal.get(0));
     }
 }
