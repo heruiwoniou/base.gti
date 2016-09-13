@@ -13,7 +13,7 @@ var fs = require('fs'),
     autoprefixer = require('autoprefixer-stylus');
 
 gulp.task('build-css',function(){
-    gulp.src('_Runtime/Content/style/swbanner.styl')
+    gulp.src('_Runtime/Content/style/*.styl')
         .pipe(stylus({use: [autoprefixer({ browsers: ['last 2 versions', 'ie 9'], cascade: false })]}))
         .pipe(gulp.dest('Runtime/Content/style/'));
 })

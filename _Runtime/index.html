@@ -21,6 +21,21 @@
 			<ul>
 				<li>课堂提问</li>
 				<li>下一个课件</li>
+				<li>
+					跳转到
+					<select id="pageIndex" onchange="goto(this)">
+						<option value="1">第一页</option>
+						<option value="2">第二页</option>
+						<option value="3">第三页</option>
+						<option value="4">第四页</option>
+						<option value="5">第五页</option>
+						<option value="6">第六页</option>
+						<option value="7">第七页</option>
+						<option value="8">第八页</option>
+						<option value="9">第九页</option>
+						<option value="10">第十页</option>
+					</select>
+				</li>
 				<li>退出</li>
 			</ul>
 		</div>
@@ -28,5 +43,11 @@
 	<script src='Content/js/jquery.min.js'></script>
 	<script src='Content/js/jquery.mousewheel.js'></script>
 	<script src='Content/js/swbanner.js'></script>
+	<script>
+		function goto(el)
+		{
+			$('.swbanner-banner img').eq(el.value - 1).trigger('click')
+		}
+	</script>
 </body>
 </html>

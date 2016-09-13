@@ -307,8 +307,27 @@
 				$swMessage.removeClass('display')
 			$swMessage.html(mes);
 			if(scrollTimer === null)
-				$swShrunkenWrap.animate({scrollLeft:190 * n});
+				$swShrunkenWrap.stop().animate({scrollLeft:190 * n});
 		}
+
+		//键盘事件侦听
+		$(document).on('keydown',function(e){
+			switch (e.keyCode) {
+				case 39:
+					var index = $nav.index($nav.filter('.current')) + 1;
+					show( index % len )
+					// statements_1
+					break;
+				case 37:
+					var index = $nav.index($nav.filter('.current')) - 1;
+					show( index === -1 ? len - 1 : index )
+					// statements_1
+					break;
+				default:
+					// statements_def
+					break;
+			}
+		})
 
 		show ( 0 );
 
