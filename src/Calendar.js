@@ -1,6 +1,5 @@
 import moment from 'moment';
 import $ from 'jQuery';
-import Body from './render/body.js';
 import Header from './render/header.js';
 import Menology from './render/menology.js';
 
@@ -32,6 +31,9 @@ class Calendar {
         }
 
         set_options.call(this, date, options);
+
+        this.Header = new Header(this);
+        this.Menology = new Menology(this);
     }
 
     get cellHeight() {
@@ -70,7 +72,7 @@ class Calendar {
     /*
      * 设置日历渲染前进行的操作
      */
-    
+
     set onrenderbefore(renderbefore) {
             if (typeof renderbefore !== 'function') throw new Error('must a function key');
             this.events.render.before = renderbefore;
@@ -104,9 +106,11 @@ class Calendar {
 
         this.events.render.before.apply(this);
 
-        Body(this);
-        Header(this);
-        Menology(this);
+        this.el.style.height = this.options.height + 'px';
+        this.el.style.width = this.options.width + 'px';
+
+        this.Header.render();
+        this.Menology.render();
 
         this.events.render.after.apply(this);
     }

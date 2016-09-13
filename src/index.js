@@ -10,6 +10,9 @@ class Schedule extends Calendar {
         super(element, date, options);
         this.draggable = null;
 
+        let dropcontainer = null;
+        let dropitems = null;
+
         this.oncellrendering = function(date, txt, row, cell) {
             var that = this;
             var $span = $(`<span>${ txt }</span>`);
@@ -19,6 +22,7 @@ class Schedule extends Calendar {
             let events = this.options.events.filter(o => date.isSame(o.start));
             events.forEach(o => $draggable.append(`<a href="javascript:;">${o.title}</a>`));
             $div.append($span);
+            dropitems.push({ row, cell });
             if (events.length !== 0) {
                 $div.append($draggable);
                 let draggable =
@@ -44,15 +48,26 @@ class Schedule extends Calendar {
         }
 
         this.onrenderbefore = function() {
-
+            dropitems = [];
+            if (!dropcontainer) {
+                let { titleHeight, theadHeight } = this.options;
+                dropcontainer = $(`<div class="schedule-drop-container" style="top:${ titleHeight + theadHeight + 2 }px"></div>`);
+                this.el.appendChild(dropcontainer.get(0));
+            }
+            dropcontainer.empty();
         }
         this.onrenderafter = function() {
-            $(this.el).find('tbody:not([droppable]) td').each(function() {
-                console.log($(this).height());
-            }).droppable({
-                accept: '.schedule-draggable',
-                hoverClass: 'schedule-to'
-            });
+            $(this.el).find('tbody td').each((i, td) => {
+                    let height = $(td).height();
+                    let width = this.cellWidth;
+                    let { row, cell } = dropitems[i];
+                    let html = `<div class="schedule-drop" style="height:${ height + 4 }px;width:${ width }px"></div>`;
+                    dropcontainer.append(html)
+                })
+                // .droppable({
+                //     accept: '.schedule-draggable',
+                //     hoverClass: 'schedule-to'
+                // });
             if (this.draggable) {
                 $.ui.ddmanager.prepareOffsets(this.draggable);
                 $.ui.ddmanager.dragStart(this.draggable)
