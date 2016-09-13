@@ -31,7 +31,7 @@ export default function Menology(context) {
         let current_date = start_date.add(1, 'day');
         var cm = current_date.month() + 1;
         $(td).append(
-            context.events.cell.rendering.call(context, moment(current_date), current_date.date())
+            context.events.cell.rendering.call(context, moment(current_date), current_date.date(), i)
         )
         td.className = cm == month ? 'c' : 'o';
         tr.appendChild(td);

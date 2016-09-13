@@ -39,6 +39,15 @@ gulp.task('build', function() {
         }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist'));
+    gulp.src('src/Calendar.js', { read: false })
+        .pipe(rollup({
+            sourceMap: true,
+            format: 'umd',
+            moduleName: 'Calendar',
+            plugins: [babel({ "presets": ["es2015-rollup"] })]
+        }))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('dist'));
 })
 
 gulp.task('default', ['clean'], function() {

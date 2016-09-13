@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="dist/style/extend.css">
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="node_modules/moment/moment.js"></script>
-    <script type="text/javascript" src="dist/index.js"></script>
+    <script type="text/javascript" src="dist/Calendar.js"></script>
     <style>
         html,
         body {
@@ -33,7 +33,7 @@
             cellHeight: 100
         });
         calendar.oncellrendering = function(date, txt) {
-            return txt;
+            return txt + '';
         }
         calendar.render()
     </script>

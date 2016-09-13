@@ -9,7 +9,8 @@ class Schedule extends Calendar {
     ) {
         super(element, date, options);
         this.draggable = null;
-        this.oncellrendering = function(date, txt) {
+
+        this.oncellrendering = function(date, txt, row, cell) {
             var that = this;
             var $span = $(`<span>${ txt }</span>`);
             var $div = $('<div class="schedule-item"></div>');
@@ -42,8 +43,13 @@ class Schedule extends Calendar {
             return $div;
         }
 
-        this.onrendered = function() {
-            $(this.el).find('tbody:not([droppable]) td').droppable({
+        this.onrenderbefore = function() {
+
+        }
+        this.onrenderafter = function() {
+            $(this.el).find('tbody:not([droppable]) td').each(function() {
+                console.log($(this).height());
+            }).droppable({
                 accept: '.schedule-draggable',
                 hoverClass: 'schedule-to'
             });

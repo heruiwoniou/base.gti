@@ -23,9 +23,12 @@ class Calendar {
         this.options = {};
         this.events = {
             cell: {
-                rendering: function(date, txt) { return txt; }
+                rendering: function(date, txt, row, cell) { return txt; }
             },
-            rendered: function() {}
+            render: {
+                before: function() {},
+                after: function() {}
+            }
         }
 
         set_options.call(this, date, options);
@@ -63,9 +66,21 @@ class Calendar {
         if (typeof cellrendering !== 'function') throw new Error('must a function key');
         this.events.cell.rendering = cellrendering;
     }
-    set onrendered(rendered) {
-        if (typeof rendered !== 'function') throw new Error('must a function key');
-        this.events.rendered = rendered;
+
+    /*
+     * 设置日历渲染前进行的操作
+     */
+    
+    set onrenderbefore(renderbefore) {
+            if (typeof renderbefore !== 'function') throw new Error('must a function key');
+            this.events.render.before = renderbefore;
+        }
+        /*
+         * 设置日历渲染完毕进行的操作
+         */
+    set onrenderafter(renderafter) {
+        if (typeof renderafter !== 'function') throw new Error('must a function key');
+        this.events.render.after = renderafter;
     }
 
     next() {
@@ -87,11 +102,13 @@ class Calendar {
         if (args.length != 0 && (Array.isArray(args[0]) || typeof args[0].getYear == 'function'))
             set_options.call(this, args[0], args[1] || {});
 
+        this.events.render.before.apply(this);
+
         Body(this);
         Header(this);
         Menology(this);
 
-        this.events.rendered.apply(this);
+        this.events.render.after.apply(this);
     }
 }
 export default Calendar;
