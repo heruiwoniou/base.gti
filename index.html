@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="dist/style/css.css">
     <link rel="stylesheet" href="dist/style/schedule.css">
     <link rel="stylesheet" href="dist/style/extend.css">
-    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="bower_components/moment/moment.js"></script>
     <script type="text/javascript" src="dist/index.js"></script>
     <style>
@@ -33,9 +33,10 @@
         var m = date.getMonth();
         var y = date.getFullYear();
         var schedule = new Schedule('#schedule', {
-            //表头高度（可省略,默认为50）
 
+            //表头高度（可省略,默认为50）
             theadHeight: 50,
+
             //日期标题高度（可省略,默认为100）
             titleHeight: 100,
 
