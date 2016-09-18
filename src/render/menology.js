@@ -1,7 +1,7 @@
 import moment from 'moment';
 import $ from 'jQuery';
 
-class Menology {
+export default class Menology {
     constructor(context) {
         this.context = context;
     }
@@ -54,7 +54,7 @@ class Menology {
             let current_date = start_date.add(1, 'day');
             var cm = current_date.month() + 1;
             $(td).append(
-                context.events.cell.rendering.call(context, moment(current_date), current_date.date(), Math.ceil(i / 7) - 1, (i - 1) % 7)
+                context.handler.cell.rendering.call(context, moment(current_date), current_date.date(), Math.ceil(i / 7) - 1, (i - 1) % 7)
             )
             td.className = cm == this.month ? 'c' : 'o';
             tr.appendChild(td);
@@ -73,5 +73,3 @@ class Menology {
         }
     }
 }
-
-export default Menology

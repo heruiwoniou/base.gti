@@ -18,7 +18,7 @@ gulp.task('lint', function() {
 })
 
 gulp.task('css', function() {
-    return gulp.src('src/style/*.styl')
+    return gulp.src('src/style/schedule.styl')
         .pipe(stylus({ use: [autoprefixer({ browsers: ['last 2 versions', 'ie 9'], cascade: false })] }))
         .pipe(gulp.dest('dist/style'));
 })
@@ -32,21 +32,12 @@ gulp.task('build', function() {
 
     gulp.src('src/index.js', { read: false })
         .pipe(rollup({
-            sourceMap: true,
+            //sourceMap: true,
             format: 'umd',
             moduleName: 'Schedule',
             plugins: [babel({ "presets": ["es2015-rollup"] })]
         }))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist'));
-    gulp.src('src/Calendar.js', { read: false })
-        .pipe(rollup({
-            sourceMap: true,
-            format: 'umd',
-            moduleName: 'Calendar',
-            plugins: [babel({ "presets": ["es2015-rollup"] })]
-        }))
-        .pipe(sourcemaps.write())
+        //.pipe(sourcemaps.write())
         .pipe(gulp.dest('dist'));
 })
 

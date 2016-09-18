@@ -1,3 +1,14 @@
+@import './extend.styl';
+
+.calendar-panel
+    td.o
+        .schedule-item
+            span
+                color rgba(0, 0, 0, .2)
+            .close
+                color white;
+            .schedule-draggable
+                background: rgba(4, 140, 128, .5);
 .schedule-item
     padding 0 5px 5px 5px
     line-height 1.5
@@ -8,6 +19,24 @@
 .schedule-draggable
     text-align: center;
     background: #048c80;
+    position: relative;
+    z-index: 2
+    .close
+        cursor: pointer
+        height: 16px;
+        width: 16px;
+        background: red;
+        position: absolute;
+        top -5px;
+        line-height: 1;
+        color: white;
+        font-size: 12px
+        border-radius: 8px;
+        right -5px;
+        display none;
+    &:hover
+        .close
+            display: block;
     a
         line-height 28px
         display block
@@ -20,8 +49,8 @@
         width: 100%;
         position: absolute;
         left: 0;
+        z-index: 1;
         .schedule-drop
             float:left;
-            .schedule-to
+            &.schedule-to
                 background: rgba(255, 0, 0 ,.2);
-                color: white;

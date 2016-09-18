@@ -1,6 +1,6 @@
 import $ from 'jQuery';
 
-class Header {
+export default class Header {
     constructor(context) {
         this.context = context;
     }
@@ -28,5 +28,3 @@ class Header {
         }
     }
 }
-
-export default Header;

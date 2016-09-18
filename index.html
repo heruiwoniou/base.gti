@@ -10,7 +10,7 @@
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
     <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
-    <script type="text/javascript" src="node_modules/moment/moment.js"></script>
+    <script type="text/javascript" src="bower_components/moment/moment.js"></script>
     <script type="text/javascript" src="dist/index.js"></script>
     <style>
         html,
@@ -32,67 +32,101 @@
         var date = new Date();
         var m = date.getMonth();
         var y = date.getFullYear();
-        var schedule = new Schedule('#schedule');
+        var schedule = new Schedule('#schedule', {
+            //表头高度（可省略,默认为50）
+
+            theadHeight: 50,
+            //日期标题高度（可省略,默认为100）
+            titleHeight: 100,
+
+            //宽度（可省略,默认为100%） 
+            width: 1000,
+
+            //每格最小高度（可省略,默认与表格宽度相等）
+            cellHeight: 100
+        });
+
+
+        //单元格被单击事件
+        schedule.oncellclick = function(date) {
+            console.log(date);
+        }
+
+        //日程内容变动后事件
+        schedule.oneventschanged = function(_old_, _new_) {
+            console.log('oneventschanged', _old_, _new_);
+        }
+
+        //日程明细点击事件
+        schedule.oneventclick = function(event) {
+            console.log('oneventclick', event);
+        }
+
+        //日程被清除前事件
+        schedule.oneventclosebefore = function(events) {
+            console.log('oneventclosebefore', events);
+        }
+
+        //日程被清除后事件
+        schedule.oneventcloseafter = function() {
+            console.log('oneventcloseafter')
+        }
 
         schedule.render(date, {
-            theadHeight: 50,
-            titleHeight: 100,
-            width: 1000,
-            cellHeight: 100,
             events: [{
                 title: '备课',
-                start: new Date(y, m, 1)
+                date: new Date(y, m, 1)
             }, {
                 title: '上课',
-                start: new Date(y, m, 1)
+                date: new Date(y, m, 1)
             }, {
                 title: '教学总结',
-                start: new Date(y, m, 1)
+                date: new Date(y, m, 1)
             }, {
                 title: 'aaa',
-                start: new Date(y, m, 1)
+                date: new Date(y, m, 1)
             }, {
                 title: 'cc',
-                start: new Date(y, m, 1)
+                date: new Date(y, m, 1)
             }, {
                 title: 'bbb',
-                start: new Date(y, m, 1)
+                date: new Date(y, m, 1)
             }, {
                 title: '备课',
-                start: new Date(y, m, 6)
+                date: new Date(y, m, 6)
             }, {
                 title: '上课',
-                start: new Date(y, m, 6)
+                date: new Date(y, m, 6)
             }, {
                 title: '教学总结',
-                start: new Date(y, m, 6)
+                date: new Date(y, m, 6)
             }, {
                 title: '备课',
-                start: new Date(y, m, 8)
+                date: new Date(y, m, 8)
             }, {
                 title: '上课',
-                start: new Date(y, m, 8)
+                date: new Date(y, m, 8)
             }, {
                 title: '教学总结',
-                start: new Date(y, m, 8)
+                date: new Date(y, m, 8)
             }, {
                 title: '备课',
-                start: new Date(y, m, 12)
+                date: new Date(y, m, 12)
             }, {
                 title: '上课',
-                start: new Date(y, m, 12)
+                date: new Date(y, m, 12)
             }, {
                 title: '教学总结',
-                start: new Date(y, m, 12)
+                date: new Date(y, m, 12)
             }, {
                 title: '上课',
-                start: new Date(y, m, 15)
+                date: new Date(y, m, 15)
             }, {
                 title: '备课',
-                start: new Date(y, m, 15)
+                date: new Date(y, m, 15)
             }, {
                 title: '教学总结',
-                start: new Date(y, m, 15)
+                date: new Date(y, m, 15)
             }]
         })
     </script>

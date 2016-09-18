@@ -20,7 +20,7 @@ class Calendar {
         this.el = element.nodeName ? element : document.querySelector(element);
         this.el.className = (this.el.className ? ' calendar' : 'calendar');
         this.options = {};
-        this.events = {
+        this.handler = {
             cell: {
                 rendering: function(date, txt, row, cell) { return txt; }
             },
@@ -66,7 +66,7 @@ class Calendar {
      */
     set oncellrendering(cellrendering) {
         if (typeof cellrendering !== 'function') throw new Error('must a function key');
-        this.events.cell.rendering = cellrendering;
+        this.handler.cell.rendering = cellrendering;
     }
 
     /*
@@ -75,14 +75,14 @@ class Calendar {
 
     set onrenderbefore(renderbefore) {
             if (typeof renderbefore !== 'function') throw new Error('must a function key');
-            this.events.render.before = renderbefore;
+            this.handler.render.before = renderbefore;
         }
         /*
          * 设置日历渲染完毕进行的操作
          */
     set onrenderafter(renderafter) {
         if (typeof renderafter !== 'function') throw new Error('must a function key');
-        this.events.render.after = renderafter;
+        this.handler.render.after = renderafter;
     }
 
     next() {
@@ -104,7 +104,7 @@ class Calendar {
         if (args.length != 0 && (Array.isArray(args[0]) || typeof args[0].getYear == 'function'))
             set_options.call(this, args[0], args[1] || {});
 
-        this.events.render.before.apply(this);
+        this.handler.render.before.apply(this);
 
         this.el.style.height = this.options.height + 'px';
         this.el.style.width = this.options.width + 'px';
@@ -112,7 +112,7 @@ class Calendar {
         this.Header.render();
         this.Menology.render();
 
-        this.events.render.after.apply(this);
+        this.handler.render.after.apply(this);
     }
 }
 export default Calendar;
