@@ -4,7 +4,8 @@ var gulp = require('gulp'),
     rollup = require('gulp-rollup'),
     babel = require('rollup-plugin-babel'),
     eslint = require('gulp-eslint'),
-    autoprefixer = require('autoprefixer-stylus');
+    autoprefixer = require('autoprefixer-stylus'),
+    sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('lint', function() {
     return gulp.src(['src/**/*.js', '!node_modules/**'])
@@ -28,6 +29,7 @@ gulp.task('clean', function() {
 
 gulp.task('build', ['lint'], function() {
     gulp.src('./src/**/*.js')
+        .pipe(sourcemaps.init())
         .pipe(rollup({
             entry: './src/index.js',
             format: 'umd',
@@ -38,6 +40,7 @@ gulp.task('build', ['lint'], function() {
                 })
             ]
         }))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('./dist'));
 })
 
