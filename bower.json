@@ -1,0 +1,24 @@
+{
+  "name": "widgets-htmleditor",
+  "description": "rollup base project",
+  "main": "index.js",
+  "authors": [
+    "heruiwoniou <heruiwoniou@qq.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11"
+  },
+  "keywords": [
+    "editor"
+  ]
+}
