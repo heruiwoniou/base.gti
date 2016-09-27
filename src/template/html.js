@@ -1,13 +1,33 @@
-export const baseHtml =
+export const baseHtml = function(uid) {
+    return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>htmleditor</title>
+        <style>
+            html,
+            body {
+                margin: 0px;
+            }
+            html{
+                height: 100%;
+                box-sizing: border-box;
+                padding: 5px;
+            }
+        </style>
+        <script>
+            window.onload = function(){
+                setTimeout(function() {
+                    var editor = window.parent.EDITOR.instances["instance${ uid }"];
+                    editor.setup(window, document);
+                });
+            }
+        </script>
+    </head>
+    <body>
+        
+    </body>
+    </html>
     `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>htmleditor</title>
-</head>
-<body>
-    
-</body>
-</html>
-`
+}

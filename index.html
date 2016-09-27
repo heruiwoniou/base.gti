@@ -4,17 +4,41 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
     <link rel="stylesheet" href="dist/style/css.css">
-    <script src="bower_components/jquery/dist/jquery.js">
-        < /script <
-        script src = 'dist/index.js' >
-    </script>
+    <script src='dist/index.js'></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        body {
+            text-align: center;
+            height: 80%;
+            line-height: 100%;
+        }
+        
+        body:before {
+            content: '';
+            height: 100%;
+            width: 1px;
+        }
+        
+        .htmleditor,
+        body:before {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 
 <body>
     <div class="htmleditor" id="htmleditor"></div>
 </body>
 <script>
-    var htmleditor = new htmlEditor(document.querySelector('.htmleditor'))
+    var htmleditor = new htmlEditor(document.querySelector('.htmleditor'));
+    htmleditor.render();
 </script>
 
 </html>

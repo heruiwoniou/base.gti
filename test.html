@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <title>document.selection.createRange例子</title>
+</head>
+
+<body>
+
+    <div>123123123123123</div>
+    <div><input type="button" value="加粗" onclick="javascript :Bold();" /></div>
+
+    <script language="javascript">
+        function Bold() {
+
+            var bo = document.selection.createRange();
+
+            bo.execCommand("Bold");
+
+        }
+    </script>
+
+</body>
+
+</html>
