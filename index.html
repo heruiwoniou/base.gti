@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="dist/style/css.css">
     <script src='dist/index.js'></script>
     <style>
@@ -25,6 +25,16 @@
             width: 1px;
         }
         
+        .toolbar {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .toolbar button {
+            display: block;
+            margin: 5px 0;
+        }
+        
         .htmleditor,
         body:before {
             display: inline-block;
@@ -34,11 +44,37 @@
 </head>
 
 <body>
+    <div class="toolbar">
+        <button onclick="addTable()">添加表格</button>
+        <button onclick="removeTable()">删除表格</button>
+    </div>
     <div class="htmleditor" id="htmleditor"></div>
 </body>
 <script>
+    Editor.plugins['addTable'] = {
+        execCommand: function() {
+            this.execCommand('insertHTML', '<b>aaaa</b>')
+        },
+        queryCommandState: function() {},
+        queryCommandValue: function() {}
+    }
+
     var htmleditor = new htmlEditor(document.querySelector('.htmleditor'));
+    htmleditor.on('aftersetup', function() {
+        console.log('aftersetup')
+    });
+    htmleditor.on('afterrender', function() {
+        console.log('afterrender')
+    });
     htmleditor.render();
+
+    function addTable() {
+        htmleditor.execCommand('addTable');
+    }
+
+    function removeTable() {
+        htmleditor.execCommand('removeTable');
+    }
 </script>
 
 </html>

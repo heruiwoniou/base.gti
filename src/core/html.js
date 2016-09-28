@@ -1,4 +1,4 @@
-export const baseHtml = function(uid) {
+export default function BaseHtml(uid) {
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -19,7 +19,7 @@ export const baseHtml = function(uid) {
         <script>
             window.onload = function(){
                 setTimeout(function() {
-                    var editor = window.parent.EDITOR.instances["instance${ uid }"];
+                    var editor = window.parent.Editor.instances["instance${ uid }"];
                     editor.setup(window, document);
                 });
             }

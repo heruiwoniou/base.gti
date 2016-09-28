@@ -1,5 +1,3 @@
-import { lowie } from './config';
-
 export default class Selection {
     constructor(editor) {
         this.editor = editor;

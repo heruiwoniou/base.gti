@@ -1,10 +1,12 @@
-import { EDITOR, lowie } from './config';
-
 import $ from 'jquery';
 
-import { baseHtml } from './template/html';
-import Event from './event';
-import Selection from './selection';
+import Editor from './core/config';
+import BaseHtml from './core/html';
+import Event from './core/event';
+import Selection from './core/selection';
+
+import { ie, lowie, gecko } from './core/browser';
+
 
 let uid = 0;
 export default class HtmlEditor extends Event {
@@ -16,7 +18,7 @@ export default class HtmlEditor extends Event {
             customDomain: null
         };
 
-        EDITOR.instances['instance' + this.uid] = this;
+        Editor.instances['instance' + this.uid] = this;
 
         this.iframe = null;
         this.selection = null;
@@ -31,10 +33,17 @@ export default class HtmlEditor extends Event {
     }
 
     execCommand(cmd, value) {
-        this.doc.execCommand(cmd, false, value === undefined ? null : value);
+        cmd = Editor.plugins[cmd] ? Editor.plugins[cmd] : cmd;
+        if (typeof cmd === 'string') {
+            this.fireEvent('afterwindowclick')
+            this.doc.execCommand(cmd, false, value === undefined ? null : value);
+        } else {
+            cmd.execCommand.apply(this, arguments);
+        }
     }
 
     setup(win, doc) {
+        this.fireEvent('beforesetup');
         if (lowie) {
             doc.body.disabled = true;
             doc.body.contentEditable = true;
@@ -43,11 +52,27 @@ export default class HtmlEditor extends Event {
             doc.body.contentEditable = true;
         }
         doc.body.spellcheck = false;
-        win.onclick = function() { doc.body.focus(); };
+
+        this._initEvents();
+
+        try {
+            doc.execCommand('2D-position', false, false);
+        } catch (e) {}
+        try {
+            doc.execCommand('enableInlineTableEditing', false, false);
+        } catch (e) {}
+        try {
+            doc.execCommand('enableObjectResizing', false, false);
+        } catch (e) {}
+
+        this.on('afterwindowclick', function() { doc.body.focus(); });
         this.selection = new Selection(this);
+
+        this.fireEvent('aftersetup');
     }
 
     render() {
+        this.fireEvent('before');
         this.iframe = $('<iframe></iframe>', {
             id: this.uid,
             marginHeight: 0,
@@ -56,9 +81,47 @@ export default class HtmlEditor extends Event {
             width: "100%",
             height: "100%",
             name: this.name ? this.name : 'editor',
-            src: `javascript:void(function(){document.open();${ (this.options.customDomain && document.domain != location.hostname ? 'document.domain="${ document.domain }";' : '') }document.write('${ baseHtml(this.uid) }');document.close();}())`
+            src: `javascript:void(function(){document.open();${ (this.options.customDomain && document.domain != location.hostname ? 'document.domain="${ document.domain }";' : '') }document.write('${ BaseHtml(this.uid) }');document.close();}())`
         });
 
         this.el.append(this.iframe);
+        this.fireEvent('afterrender');
+    }
+
+    _initEvents() {
+        var _proxyDomEvent = $.proxy(this._proxyDomEvent, this),
+            me = this;
+        $(this.doc).on('click contextmenu mousedown keydown keyup keypress mouseup mouseover mouseout selectstart', _proxyDomEvent);
+        $(this.win).on('focus blur', _proxyDomEvent);
+        $(this.win).on('click', function() {
+            me.fireEvent('afterwindowclick')
+        })
+
+        $(this.doc.body).on('drop', function(e) {
+            //阻止ff下默认的弹出新页面打开图片
+            if (gecko && e.stopPropagation) { e.stopPropagation(); }
+            me.fireEvent('contentchange')
+        });
+
+        $(this.doc).on('mouseup keydown', function(e) {
+            //特殊键不触发selectionchange
+            if (e.type == 'keydown' && (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey)) {
+                return;
+            }
+            if (e.button == 2) return;
+            setTimeout(function() {
+                me.fireEvent('selectionchange');
+            });
+        });
+    }
+
+    _domEventProxy(e) {
+        if (this.fireEvent('before' + e.type.replace(/^on/, '').toLowerCase()) === false) {
+            return false;
+        }
+        if (this.fireEvent(e.type.replace(/^on/, ''), e) === false) {
+            return false;
+        }
+        return this.fireEvent('after' + e.type.replace(/^on/, '').toLowerCase())
     }
 }

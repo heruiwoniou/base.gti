@@ -1,4 +1,4 @@
-import $ from 'jquery';
+const placereg = /\s*$/;
 
 let getListener = function(obj, type, force) {
     var allListeners;
@@ -16,11 +16,14 @@ let removeItem = function(array, item) {
     }
 }
 
+let trim = function(str) {
+    return str.replace(placereg, '');
+}
+
 export default class Event {
     constructor() {}
-
     addListener(types, listener) {
-        types = $.trim(types).split(/\s+/);
+        types = trim(types).split(/\s+/);
         for (var i = 0, ti; ti = types[i++];) {
             getListener(this, ti, true).push(listener);
         }
@@ -28,25 +31,21 @@ export default class Event {
     on(types, listener) {
         return this.addListener(types, listener);
     }
-
     off(types, listener) {
         return this.removeListener(types, listener)
     }
-
     trigger() {
         return this.fireEvent.apply(this, arguments);
     }
-
     removeListener(types, listener) {
-        types = $.trim(types).split(/\s+/);
+        types = trim(types).split(/\s+/);
         for (var i = 0, ti; ti = types[i++];) {
             removeItem(getListener(this, ti) || [], listener);
         }
     }
-
     fireEvent() {
         var types = arguments[0];
-        types = $.trim(types).split(' ');
+        types = trim(types).split(' ');
         for (var i = 0, ti; ti = types[i++];) {
             var listeners = getListener(this, ti),
                 r, t, k;
@@ -69,5 +68,4 @@ export default class Event {
         }
         return r;
     }
-
 }
