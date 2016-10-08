@@ -4,24 +4,30 @@ import Editor from './core/config';
 import BaseHtml from './core/html';
 import Event from './core/event';
 import Selection from './core/selection';
+import Plugin, { load } from './core/plugin';
 
 import { ie, lowie, gecko } from './core/browser';
+
+import './plugins/insertHtml';
 
 
 let uid = 0;
 export default class HtmlEditor extends Event {
     constructor(el, options) {
         super();
+
         this.uid = uid++;
         this.el = $(el);
         this.options = options || {
             customDomain: null
         };
-
-        Editor.instances['instance' + this.uid] = this;
-
         this.iframe = null;
         this.selection = null;
+        this.commands = {};
+        this.plugin = new Plugin(this);
+
+        Editor.instances['instance' + this.uid] = this;
+        load(this);
     }
 
     get win() {
@@ -33,13 +39,29 @@ export default class HtmlEditor extends Event {
     }
 
     execCommand(cmd, value) {
-        cmd = Editor.plugins[cmd] ? Editor.plugins[cmd] : cmd;
-        if (typeof cmd === 'string') {
-            this.fireEvent('afterwindowclick')
-            this.doc.execCommand(cmd, false, value === undefined ? null : value);
-        } else {
-            cmd.execCommand.apply(this, arguments);
+        var result;
+        this.fireEvent('afterwindowclick');
+        if (this.queryCommandState(cmd) == -1) {
+            this.fireEvent('beforeexeccommand');
+            result = this._callCmdFn('execCommand', arguments);
+            this.fireEvent('afterexeccommand');
         }
+        return result;
+    }
+
+    /**
+     * 状态返回-1|0|1
+     * 其中
+     * -1未设置
+     * 0为不可用
+     * 1为已设置
+     */
+    queryCommandState(cmd) {
+        return this._callCmdFn('queryCommandState', arguments)
+    }
+
+    queryCommandValue(cmd) {
+        return this._callCmdFn('queryCommandValue', arguments)
     }
 
     setup(win, doc) {
@@ -89,12 +111,12 @@ export default class HtmlEditor extends Event {
     }
 
     _initEvents() {
-        var _proxyDomEvent = $.proxy(this._proxyDomEvent, this),
+        var _domEventProxy = $.proxy(this._domEventProxy, this),
             me = this;
-        $(this.doc).on('click contextmenu mousedown keydown keyup keypress mouseup mouseover mouseout selectstart', _proxyDomEvent);
-        $(this.win).on('focus blur', _proxyDomEvent);
+        $(this.doc).on('click contextmenu mousedown keydown keyup keypress mouseup mouseover mouseout selectstart', _domEventProxy);
+        $(this.win).on('focus blur', _domEventProxy);
         $(this.win).on('click', function() {
-            me.fireEvent('afterwindowclick')
+            me.fireEvent('afterwindowclick');
         })
 
         $(this.doc.body).on('drop', function(e) {
@@ -119,9 +141,23 @@ export default class HtmlEditor extends Event {
         if (this.fireEvent('before' + e.type.replace(/^on/, '').toLowerCase()) === false) {
             return false;
         }
+
         if (this.fireEvent(e.type.replace(/^on/, ''), e) === false) {
             return false;
         }
         return this.fireEvent('after' + e.type.replace(/^on/, '').toLowerCase())
+    }
+
+    _callCmdFn(cmdName, args) {
+        var cmd = args[0],
+            value = args[1],
+            cmdFn;
+        cmd = this.commands[cmd] ? this.commands[cmd] : cmd;
+        if (typeof cmd === 'string') {
+            return this.doc[cmdName](cmd, false, value === undefined ? null : value);
+        } else {
+            cmdFn = cmd[cmdName];
+            return cmdFn === undefined ? -1 : cmdFn.apply(this, args);
+        }
     }
 }

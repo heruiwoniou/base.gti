@@ -51,24 +51,24 @@
     <div class="htmleditor" id="htmleditor"></div>
 </body>
 <script>
-    Editor.plugins['addTable'] = {
-        execCommand: function() {
-            this.execCommand('insertHTML', '<b>aaaa</b>')
-        },
-        queryCommandState: function() {},
-        queryCommandValue: function() {}
-    }
-
-    var htmleditor = new htmlEditor(document.querySelector('.htmleditor'));
-    htmleditor.on('aftersetup', function() {
-        console.log('aftersetup')
-    });
-    htmleditor.on('afterrender', function() {
-        console.log('afterrender')
+    var htmleditor = new HtmlEditor(document.querySelector('#htmleditor'));
+    htmleditor.plugin.register('table', function() {
+        this.on('selectionchange', function() {
+            //console.log(this.queryCommandState('addTable'));
+        })
+        this.commands.addTable = {
+            execCommand: function() {
+                this.execCommand('insertHtml', "<table><tr><td>1</td><td>2</td></tr></table>")
+            },
+            queryCommandState: function() {
+                return -1;
+            }
+        }
     });
     htmleditor.render();
 
     function addTable() {
+        debugger;
         htmleditor.execCommand('addTable');
     }
 

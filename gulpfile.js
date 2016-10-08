@@ -38,7 +38,7 @@ gulp.task('build', function() {
         .pipe(rollup({
             entry: './src/index.js',
             format: 'umd',
-            moduleName: 'htmlEditor',
+            moduleName: 'HtmlEditor',
             plugins: [
                 resolve({
                     jsnext: true,
