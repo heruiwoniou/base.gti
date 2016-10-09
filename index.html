@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="dist/style/css.css">
+    <link rel="stylesheet" href="dist/style/htmleditor.css">
     <script src='dist/index.js'></script>
     <style>
         html,
@@ -40,35 +40,26 @@
             display: inline-block;
             vertical-align: middle;
         }
+        
+        .htmleditor {
+            height: 400px;
+            width: 800px;
+        }
     </style>
 </head>
 
 <body>
     <div class="toolbar">
-        <button onclick="addTable()">添加表格</button>
-        <button onclick="removeTable()">删除表格</button>
+        <button id="addButton" onclick="addTable()">添加表格</button>
+        <button id="deleteButton" disabled onclick="removeTable()">删除表格</button>
     </div>
     <div class="htmleditor" id="htmleditor"></div>
 </body>
 <script>
     var htmleditor = new HtmlEditor(document.querySelector('#htmleditor'));
-    htmleditor.plugin.register('table', function() {
-        this.on('selectionchange', function() {
-            //console.log(this.queryCommandState('addTable'));
-        })
-        this.commands.addTable = {
-            execCommand: function() {
-                this.execCommand('insertHtml', "<table><tr><td>1</td><td>2</td></tr></table>")
-            },
-            queryCommandState: function() {
-                return -1;
-            }
-        }
-    });
     htmleditor.render();
 
     function addTable() {
-        debugger;
         htmleditor.execCommand('addTable');
     }
 

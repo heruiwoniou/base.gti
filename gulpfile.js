@@ -22,7 +22,7 @@ gulp.task('lint', function() {
 })
 
 gulp.task('css', function() {
-    return gulp.src('src/style/css.styl')
+    return gulp.src('src/style/*.styl')
         .pipe(stylus({ use: [autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'], cascade: false })] }))
         .pipe(gulp.dest('dist/style'));
 })
@@ -34,7 +34,7 @@ gulp.task('clean', function() {
 
 gulp.task('build', function() {
     gulp.src(['./src/**/*.js', './node_modules/jquery/dist/jquery.js', './library/**/*.js'])
-        .pipe(sourcemaps.init())
+        //.pipe(sourcemaps.init())
         .pipe(rollup({
             entry: './src/index.js',
             format: 'umd',
@@ -51,7 +51,7 @@ gulp.task('build', function() {
                 })
             ]
         }))
-        .pipe(sourcemaps.write())
+        //.pipe(sourcemaps.write())
         .pipe(gulp.dest('./dist'));
 })
 

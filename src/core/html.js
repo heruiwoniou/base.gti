@@ -5,6 +5,7 @@ export default function BaseHtml(uid) {
     <head>
         <meta charset="UTF-8">
         <title>htmleditor</title>
+        <link rel="stylesheet" href="dist/style/htmleditor-inner.css">
         <style>
             html,
             body {

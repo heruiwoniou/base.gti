@@ -9,14 +9,16 @@ import Plugin, { load } from './core/plugin';
 import { ie, lowie, gecko } from './core/browser';
 
 import './plugins/insertHtml';
+import './plugins/table';
+import './plugins/contextmenu';
 
 
-let uid = 0;
+let editor_uid = 0;
 export default class HtmlEditor extends Event {
     constructor(el, options) {
         super();
 
-        this.uid = uid++;
+        this.uid = editor_uid++;
         this.el = $(el);
         this.options = options || {
             customDomain: null
@@ -157,7 +159,7 @@ export default class HtmlEditor extends Event {
             return this.doc[cmdName](cmd, false, value === undefined ? null : value);
         } else {
             cmdFn = cmd[cmdName];
-            return cmdFn === undefined ? -1 : cmdFn.apply(this, args);
+            return cmdFn === undefined ? -1 : cmdFn.apply(this, [].splice.call(args, 1));
         }
     }
 }
