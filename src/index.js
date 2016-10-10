@@ -9,8 +9,8 @@ import Plugin, { load } from './core/plugin';
 import { ie, lowie, gecko } from './core/browser';
 
 import './plugins/insertHtml';
-import './plugins/table';
 import './plugins/contextmenu';
+import './plugins/table';
 
 
 let editor_uid = 0;
@@ -38,6 +38,14 @@ export default class HtmlEditor extends Event {
 
     get doc() {
         return lowie ? this.win.document : (this.iframe.get(0).contentDocument || this.win.document);
+    }
+
+    get frameLeft() {
+        return this.iframe.position().left;
+    }
+
+    get frameTop() {
+        return this.iframe.position().top;
     }
 
     execCommand(cmd, value) {
@@ -115,7 +123,7 @@ export default class HtmlEditor extends Event {
     _initEvents() {
         var _domEventProxy = $.proxy(this._domEventProxy, this),
             me = this;
-        $(this.doc).on('click contextmenu mousedown keydown keyup keypress mouseup mouseover mouseout selectstart', _domEventProxy);
+        $(this.doc).on('click contextmenu mousedown keydown keyup keypress selectstart', _domEventProxy);
         $(this.win).on('focus blur', _domEventProxy);
         $(this.win).on('click', function() {
             me.fireEvent('afterwindowclick');

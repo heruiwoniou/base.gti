@@ -33,9 +33,10 @@ gulp.task('clean', function() {
 })
 
 gulp.task('build', function() {
-    gulp.src(['./src/**/*.js', './node_modules/jquery/dist/jquery.js', './library/**/*.js'])
+    gulp.src(['./src/**/*.js', './node_modules/jquery/dist/jquery.js'])
         //.pipe(sourcemaps.init())
         .pipe(rollup({
+            sourceMap: true,
             entry: './src/index.js',
             format: 'umd',
             moduleName: 'HtmlEditor',
@@ -51,7 +52,7 @@ gulp.task('build', function() {
                 })
             ]
         }))
-        //.pipe(sourcemaps.write())
+        //.pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./dist'));
 })
 

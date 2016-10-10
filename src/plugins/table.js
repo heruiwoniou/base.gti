@@ -45,11 +45,21 @@ Editor.plugins.table = function() {
     this.on('selectionchange', function() {
         addButton.disabled = this.queryCommandState('tableState') == 1;
         deleteButton.disabled = this.queryCommandState('tableState') == -1;
+        this.execCommand('contextmenuhide')
     })
-    this.on('contextmenu', function() {
+    Editor.plugins.contextmenu.instance.on('itemclick', function() {
+
+    })
+    this.on('contextmenu', function(type, e) {
         this.fireEvent('selectionchange');
         if (this.queryCommandState('tableState') == 1) {
-            this.execCommand('contextmenushow', 10, 20);
+            this.execCommand('contextmenushow', this.frameLeft + e.clientX, this.frameTop + e.clientY, [
+                { text: '添加行' },
+                { text: '删除行' },
+                '-',
+                { text: '添加列' },
+                { text: '删除列' }
+            ]);
             return false;
         }
     })

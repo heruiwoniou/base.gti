@@ -2,7 +2,7 @@ import { ie } from './../core/browser';
 
 Editor.plugins.core = function() {
     this.commands.insertHtml = {
-        execCommand(cmd, value) {
+        execCommand(value) {
             if (ie && this.selection.Range.pasteHTML) {
                 this.selection.Range.pasteHTML(value);
             } else {

@@ -1,11 +1,38 @@
 .contextmenu
-    height: 300px;
+    height: auto;
     position: absolute;
     //display: none;
-    width: 200px;
     top:0px;
     left:0px;
+    min-width: 100px;
     background: white;
     border: 1px solid #ccc;
-    box-shadow: 0 0 5px #ccc;
+    box-shadow: -1px 1px 5px #ccc;
     border-radius: 5px;
+    padding 5px 0;
+    ul
+        padding 0;
+        margin: 0;
+    li
+        &:before
+            content ''
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+        text-align: left;
+        padding 0 5px
+        font-size 12px;
+        line-height: 20px;
+        list-style: none;
+        &.line
+            line-height: 10px;
+            &:before
+                margin-right: 0px
+                content '';
+                display: inline-block;
+                height: 1px;
+                background: #ccc;
+                width: 100%;
+                vertical-align: middle;
