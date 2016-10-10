@@ -19,7 +19,7 @@ class ContextMenu extends Event {
         this.cm.css({
             left: x,
             top: y
-        }).fadeIn();
+        }).show();
     }
 
     hide() {
@@ -36,8 +36,11 @@ class ContextMenu extends Event {
 
         this._initDomEvent();
 
-        this.on('click', function(e) {
-            that.fireEvent('itemclick', e.target.command, e)
+        this.on('click', function(type, e) {
+            var cmd;
+            if (cmd = e.target.getAttribute('command'))
+                that.fireEvent('itemclick', e.target.getAttribute('command'), e);
+            that.editor.fireEvent('selectionchange');
         });
     }
 
@@ -53,6 +56,7 @@ class ContextMenu extends Event {
                 let text = document.createElement('a');
                 text.innerHTML = item.text;
                 text.className = 'item';
+                if (item.command) text.setAttribute('command', item.command)
                 text.setAttribute('deep', deep);
                 li.appendChild(text);
                 if (item.items && item.items !== 0) {

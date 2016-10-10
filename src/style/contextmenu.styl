@@ -1,15 +1,15 @@
 .contextmenu
     height: auto;
     position: absolute;
-    //display: none;
+    display: none;
     top:0px;
     left:0px;
     min-width: 100px;
     background: white;
-    border: 1px solid #ccc;
-    box-shadow: -1px 1px 5px #ccc;
-    border-radius: 5px;
-    padding 5px 0;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding 2px 0;
     ul
         padding 0;
         margin: 0;
@@ -20,19 +20,23 @@
             height: 20px;
             display: inline-block;
             vertical-align: middle;
-            margin-right: 5px;
+            margin-right: 2px;
+        cursor: default;
         text-align: left;
-        padding 0 5px
+        margin: 0 2px
         font-size 12px;
         line-height: 20px;
         list-style: none;
+        border: 1px solid transparent;
+        a
+            display: inline-block;
+        &:hover
+            background: #fff5d4;
+            border-color: #dcac6c;
         &.line
-            line-height: 10px;
-            &:before
-                margin-right: 0px
-                content '';
-                display: inline-block;
-                height: 1px;
-                background: #ccc;
-                width: 100%;
-                vertical-align: middle;
+            border: 0px;
+            line-height: 1px;
+            margin: 1px 2px;
+            height: 1px;
+            font-size 0px;
+            background: #ccc;

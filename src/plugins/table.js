@@ -20,6 +20,15 @@ class Table {
         this.cell = CreateVessel(cell);
         this.editor = editor;
         Editor.plugins.table.instances[this.uid] = this;
+        this.caption = false;
+    }
+
+    static getInstance(uid) {
+        return Editor.plugins.table.instances[uid];
+    }
+
+    get el() {
+        return $(this.editor.doc).find(`table.sheet[uid=${ this.uid }]`);
     }
 
     get html() {
@@ -36,24 +45,40 @@ class Table {
         return arr.join('')
     }
 
+    addCaption() {
+        if (this.caption) return;
+        var caption = this.editor.doc.createElement('caption');
+        caption.innerHTML = "<br>";
+        this.el.prepend(caption);
+        this.caption = true;
+    }
+
+    remmoveCaption() {
+        if (!this.caption) return;
+        this.el.find('caption').remove();
+        this.caption = false;
+    }
     destroy() {
-        $(this.editor.doc).find(`table.sheet[uid=${ this.uid }]`).remove();
+        this.el.remove();
     }
 }
 
 Editor.plugins.table = function() {
+    var editor = this;
     this.on('selectionchange', function() {
         addButton.disabled = this.queryCommandState('tableState') == 1;
         deleteButton.disabled = this.queryCommandState('tableState') == -1;
         this.execCommand('contextmenuhide')
     })
-    Editor.plugins.contextmenu.instance.on('itemclick', function() {
-
+    Editor.plugins.contextmenu.instance.on('itemclick', function(type, cmd) {
+        Table.getInstance('0').addCaption();
     })
     this.on('contextmenu', function(type, e) {
         this.fireEvent('selectionchange');
         if (this.queryCommandState('tableState') == 1) {
             this.execCommand('contextmenushow', this.frameLeft + e.clientX, this.frameTop + e.clientY, [
+                { text: '添加标题', command: 'table-addCaption' },
+                '-',
                 { text: '添加行' },
                 { text: '删除行' },
                 '-',
