@@ -40,6 +40,14 @@ export default class HtmlEditor extends Event {
         return lowie ? this.win.document : (this.iframe.get(0).contentDocument || this.win.document);
     }
 
+    get width() {
+        return this.iframe.width()
+    }
+
+    get height() {
+        return this.iframe.height()
+    }
+
     get frameLeft() {
         return this.iframe.position().left;
     }
@@ -84,6 +92,7 @@ export default class HtmlEditor extends Event {
             doc.body.contentEditable = true;
         }
         doc.body.spellcheck = false;
+        doc.body.innerHTML = '';
 
         this._initEvents();
 

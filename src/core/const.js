@@ -1,0 +1,1 @@
+export const fillChar = '\u200B';

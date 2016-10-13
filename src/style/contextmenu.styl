@@ -8,19 +8,12 @@
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
+    //border-radius: 6px;
     padding 2px 0;
     ul
         padding 0;
         margin: 0;
     li
-        &:before
-            content ''
-            width: 20px;
-            height: 20px;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 2px;
         cursor: default;
         text-align: left;
         margin: 0 2px
@@ -30,6 +23,13 @@
         border: 1px solid transparent;
         a
             display: inline-block;
+            &:before
+                content ''
+                width: 20px;
+                height: 20px;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 2px;
         &:hover
             background: #fff5d4;
             border-color: #dcac6c;

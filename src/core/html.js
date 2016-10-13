@@ -26,9 +26,7 @@ export default function BaseHtml(uid) {
             }
         </script>
     </head>
-    <body>
-        
-    </body>
+    <body></body>
     </html>
     `
 }

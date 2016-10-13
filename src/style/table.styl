@@ -1,16 +1,20 @@
 table.sheet
     border-collapse: collapse
     display: table;
-    width: 100%
     margin-bottom: 10px;
     td
         padding: 5px 10px;
-        text-align: center
+        text-align: left
         border: 1px solid #ccc
         &.left
-            text-align: left
+            text-align:left;
+        &.center
+            text-align: center
         &.right
             text-align: right
     caption
         padding: 5px 10px;
         text-align: center;
+        border 1px dotted #ccc;
+        border-bottom-color: transparent;
+        word-break: break-all

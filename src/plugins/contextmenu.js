@@ -9,12 +9,14 @@ class ContextMenu extends Event {
 
         this.editor = editor;
         this.cm = null;
+        this.sourceInstance = null;
 
         this._init();
     }
 
-    show(x, y, items) {
+    show(instance, x, y, items) {
         if (!items || items.length == 0) return;
+        this.sourceInstance = instance;
         this._renderContent(items);
         this.cm.css({
             left: x,
@@ -24,6 +26,7 @@ class ContextMenu extends Event {
 
     hide() {
         this.cm.hide();
+        this.sourceInstance = null;
         this._destroyContent();
     }
 
@@ -39,19 +42,23 @@ class ContextMenu extends Event {
         this.on('click', function(type, e) {
             var cmd;
             if (cmd = e.target.getAttribute('command'))
-                that.fireEvent('itemclick', e.target.getAttribute('command'), e);
+                that.fireEvent('itemclick', that.sourceInstance, e.target.getAttribute('command'), e);
             that.editor.fireEvent('selectionchange');
         });
     }
 
     _renderContent(items, deep = 0) {
         let frag = document.createElement('ul'),
-            i = -1;
+            i = -1,
+            j,
+            node,
+            last;
         while (++i != items.length) {
             let item = items[i],
                 li = document.createElement('li');
-            if (item === '-') {
+            if (item === '-' || !item) {
                 li.className = 'line';
+                if (last.className == 'line') continue;
             } else {
                 let text = document.createElement('a');
                 text.innerHTML = item.text;
@@ -65,6 +72,13 @@ class ContextMenu extends Event {
                 }
             }
             frag.appendChild(li);
+            last = li;
+        }
+        //clear end node
+        i = j = frag.children.length;
+        while (--j >= 0) {
+            node = frag.children[j];
+            if (i - 1 === j && node.className === 'line') frag.removeChild(node);
         }
         return deep == 0 ? this.cm.get(0).appendChild(frag) : frag;
     }
@@ -86,8 +100,8 @@ class ContextMenu extends Event {
 Editor.plugins.contextmenu = function() {
     let cm = Editor.plugins.contextmenu.instance = new ContextMenu(this);
     this.commands.contextmenushow = {
-        execCommand(x, y, items) {
-            cm.show(x, y, items);
+        execCommand(instance, x, y, items) {
+            cm.show(instance, x, y, items);
         }
     }
     this.commands.contextmenuhide = {
