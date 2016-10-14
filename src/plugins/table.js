@@ -30,6 +30,20 @@ class Table {
         this.width = this.editor.width;
 
         this.dir = undefined;
+        this.cursor = {};
+        this.currentLine = undefined;
+    }
+
+    getWidth() {
+        return this.el.width();
+    }
+
+    getHeight() {
+        return this.el.height();
+    }
+
+    getTop() {
+        return this.el.offset().top;
     }
 
     _init() {
@@ -39,38 +53,76 @@ class Table {
     _bindEvent() {
         let that = this;
         let timer = null;
+        let temp = null;
         let clearTime = function() {
-            window.clearTimeout(timer);
+            that.editor.win.clearTimeout(timer);
             timer = null;
             $(that.editor.doc).off(`mouseup.tableMouseUpListenerDown${ that.uid } mousemove.tableMouseMoveListenerDown${ that.uid }`);
         }
-        let mousedowBindEvent = function() {
-            $(that.editor.doc).on(`mouseup.tableMouseUpListenerDown${ that.uid } mousemove.tableMouseMoveListenerDown${ that.uid }`, function() {
-                clearTime();
-            })
+        let createLine = function() {
+            var line;
+            clearTime();
+            if (!that.dir) return;
+            switch (that.dir) {
+                case 'v':
+                    line = that.editor.doc.createElement('div');
+                    line.className = 'v line';
+                    line.style.height = that.getHeight() + 'px';
+                    line.style.left = (that.cursor.first ? that.cursor.left : that.cursor.right) + 'px';
+                    line.style.top = that.getTop() + 'px';
+                    that.editor.doc.body.appendChild(line);
+                    break;
+                case 'h':
+                    line = that.editor.doc.createElement('div');
+                    line.className = 'h line';
+                    line.style.width = that.getWidth() + 'px';
+                    line.style.top = (that.cursor.first ? that.cursor.top : that.cursor.bottom) + 'px';
+                    that.editor.doc.body.appendChild(line);
+                    break;
+                default:
+                    break;
+            }
+            afterMouseBindEvent();
+            that.currentLine = line;
         }
-        $(this.editor.doc).on(`mousemove.tableMouseMoveListener${ this.uid }`, `table.${ table_mark } td`, function(e) {
+        let clearLine = function() {
+            that.editor.doc.body.removeChild(that.currentLine);
+            that.currentLine = undefined;
+        }
+        let beforeMouseBindEvent = function() {
+            $(that.editor.doc).on(`mouseup.tableMouseUpListenerDown${ that.uid }`, function(e) {
+                clearTime();
+            });
+            window.setTimeout(function() {
+                $(that.editor.doc).on(`mousemove.tableMouseMoveListenerDown${ that.uid }`, function(e) {
+                    clearTime();
+                })
+            }, 100);
+        }
+        let afterMouseBindEvent = function() {
+            $(that.editor.doc).one(`mouseup.tableLineMouseUpListener${ that.uid }`, function(e) {
+                clearLine();
+            });
+        };
+        $(this.editor.doc).on(`mousemove.tableMouseMoveListener${ this.uid }`, `table.${ table_mark } td, table.${ table_mark } caption`, function(e) {
                 let $this = $(this),
                     offset = $this.offset(),
-                    top = ~~(offset.top),
-                    bottom = ~~(top + this.offsetHeight),
-                    left = ~~(offset.left),
-                    right = ~~(left + this.offsetWidth),
+                    top = that.cursor.top = ~~(offset.top),
+                    bottom = that.cursor.bottom = ~~(top + this.offsetHeight),
+                    left = that.cursor.left = ~~(offset.left),
+                    right = that.cursor.right = ~~(left + this.offsetWidth),
                     ey = e.clientY,
                     ex = e.clientX,
                     dir = that.dir =
-                    ((left - 5 < ex && left + 5 > ex || right - 5 < ex && right + 5 > ex) ? 'v' :
-                        (top - 5 < ey && top + 5 > ey || bottom - 5 < ey && bottom + 5 > ey ? 'h' : undefined));
+                    (((that.cursor.first = (left - 5 < ex && left + 5 > ex)) || !(that.cursor.first = !(right - 5 < ex && right + 5 > ex))) ? 'v' :
+                        ((that.cursor.first = (top - 5 < ey && top + 5 > ey)) || !(that.cursor.first = !(bottom - 5 < ey && bottom + 5 > ey)) ? 'h' : undefined));
                 that.editor.doc.body.style.cursor = (dir == "h" ? "row-resize" : (dir == 'v' ? 'col-resize' : "text"));
-                console.log(left, right, '|', top, bottom)
+                //console.log(left, right, '|', top, bottom);
             })
             .on(`mousedown.tableMouseDown${ this. uid }`, `table.${ table_mark }`, function() {
                 if (timer == null && that.dir) {
-                    mousedowBindEvent();
-                    timer = setTimeout(function() {
-                        console.log(1);
-                        clearTime();
-                    }, validDragTime);
+                    beforeMouseBindEvent();
+                    timer = that.editor.win.setTimeout(createLine, validDragTime);
                 }
             })
     }
@@ -157,7 +209,7 @@ Editor.plugins.table = function() {
 
     this.commands.addTable = {
         execCommand() {
-            this.execCommand('insertHtml', new Table(this, 1, 2).html)
+            this.execCommand('insertHtml', new Table(this, 3, 5).html)
         }
     }
 
