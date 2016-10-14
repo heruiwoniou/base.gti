@@ -33,7 +33,7 @@ gulp.task('clean', function() {
 })
 
 gulp.task('build', function() {
-    gulp.src(['./src/**/*.js', './node_modules/jquery/dist/jquery.js'])
+    gulp.src(['./src/**/*.js', './node_modules/jquery/dist/jquery.js', './bower_components/jquery-ui/jquery-ui.js'])
         //.pipe(sourcemaps.init())
         .pipe(rollup({
             sourceMap: true,
@@ -60,7 +60,7 @@ gulp.task('default', ['clean'], function() {
     gulp.run('build', 'css');
 
     gulp.watch([
-        ['./src/**/*.js', './node_modules/jquery/dist/jquery.js', './library/**/*.js']
+        ['./src/**/*.js', './node_modules/jquery/dist/jquery.js', './library/**/*.js', './bower_components/**/*.js']
     ], function() {
         gulp.run('build');
     });

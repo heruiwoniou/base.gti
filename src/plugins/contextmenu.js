@@ -1,7 +1,5 @@
 import $ from 'jquery';
-
 import Event from '../core/event';
-
 
 class ContextMenu extends Event {
     constructor(editor) {
