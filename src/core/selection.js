@@ -41,8 +41,14 @@ export default class Selection {
         return "";
     }
 
+    clear() {
+        if (lowie) this.Selection.clear();
+        else this.Selection.removeAllRanges();
+    }
+
     select(node) {
-        if (!lowie) this.Selection.removeAllRanges();
+        if (lowie) this.Selection.clear();
+        else this.Selection.removeAllRanges();
         let range = this.editor.doc.createRange();
         let txtNode = getFirstTextNode(node);
         range.setStart(txtNode, 0)

@@ -1,4 +1,4 @@
-export default function BaseHtml(uid) {
+export default function BaseHtml(uid, padding) {
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -14,7 +14,7 @@ export default function BaseHtml(uid) {
             html{
                 height: 100%;
                 box-sizing: border-box;
-                padding: 5px;
+                padding: ${ padding }px;
             }
         </style>
         <script>

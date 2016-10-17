@@ -44,6 +44,10 @@ export default class HtmlEditor extends Event {
         return this.iframe.width()
     }
 
+    get padding() {
+        return 5;
+    }
+
     get height() {
         return this.iframe.height()
     }
@@ -122,7 +126,7 @@ export default class HtmlEditor extends Event {
             width: "100%",
             height: "100%",
             name: this.name ? this.name : 'editor',
-            src: `javascript:void(function(){document.open();${ (this.options.customDomain && document.domain != location.hostname ? 'document.domain="${ document.domain }";' : '') }document.write('${ BaseHtml(this.uid) }');document.close();}())`
+            src: `javascript:void(function(){document.open();${ (this.options.customDomain && document.domain != location.hostname ? 'document.domain="${ document.domain }";' : '') }document.write('${ BaseHtml(this.uid,this.padding) }');document.close();}())`
         });
 
         this.el.append(this.iframe);
