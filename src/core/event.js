@@ -51,9 +51,10 @@ export default class Event {
                 r, t, k;
             if (listeners) {
                 k = listeners.length;
-                while (k--) {
-                    if (!listeners[k]) continue;
-                    t = listeners[k].apply(this, arguments);
+                var start = -1;
+                while (++start < k) {
+                    if (!listeners[start]) continue;
+                    t = listeners[start].apply(this, arguments);
                     if (t === true) {
                         return t;
                     }

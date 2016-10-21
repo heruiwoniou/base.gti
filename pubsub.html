@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="dist/monitor.js"></script>
+</head>
+
+<body>
+
+</body>
+<script>
+    var a = new Monitor({
+        data: {
+            c: 'sdfaadf',
+            arr: [1, 2, 3, 4]
+        },
+        render: function() {
+            var div = document.createElement('div');
+            var span = document.createElement('span');
+            var txt = document.createElement('span');
+            this.watch('arr[1]', function() {
+                span.innerHTML = this.arr[1];
+            })
+            this.watch('c', function() {
+                txt.innerHTML = this.c;
+            })
+            div.appendChild(span);
+            div.appendChild(txt);
+            return div;
+        }
+    });
+    document.body.append(a.el);
+</script>
+
+</html>

@@ -3,6 +3,8 @@ var gulp = require('gulp'),
 
     stylus = require('gulp-stylus'),
     autoprefixer = require('autoprefixer-stylus'),
+    spriter = require('gulp-css-spriter'),
+    concat = require('gulp-concat'),
 
     rollup = require('gulp-rollup'),
     babel = require('rollup-plugin-babel'),
@@ -10,7 +12,8 @@ var gulp = require('gulp'),
     commonjs = require('rollup-plugin-commonjs'),
     eslint = require('gulp-eslint'),
 
-    sourcemaps = require('gulp-sourcemaps');
+    sourcemaps = require('gulp-sourcemaps'),
+    rollupsourcemaps = require('rollup-plugin-sourcemaps');
 
 gulp.task('lint', function() {
     return gulp.src(['src/**/*.js', '!node_modules/**'])
@@ -22,9 +25,20 @@ gulp.task('lint', function() {
 })
 
 gulp.task('css', function() {
+    gulp.run('image');
     return gulp.src('src/style/*.styl')
         .pipe(stylus({ use: [autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'], cascade: false })] }))
+        .pipe(spriter({
+            'spriteSheet': 'dist/style/images/sprite.png',
+            'pathToSpriteSheetFromCSS': 'images/sprite.png'
+        }))
         .pipe(gulp.dest('dist/style'));
+})
+
+gulp.task('image', function() {
+    return gulp.src([
+        'src/style/images/vline.jpg'
+    ]).pipe(gulp.dest('dist/style/images'));
 })
 
 gulp.task('clean', function() {
@@ -33,8 +47,8 @@ gulp.task('clean', function() {
 })
 
 gulp.task('build', function() {
-    gulp.src(['./src/**/*.js', './node_modules/jquery/dist/jquery.js', './bower_components/jquery-ui/jquery-ui.js'])
-        //.pipe(sourcemaps.init())
+    gulp.src(['./src/**/*.js', './node_modules/jquery/dist/jquery.js', './bower_components/jquery-mousewheel/jquery.mousewheel.js', './bower_components/jquery-ui/jquery-ui.js'], { base: 'src' })
+        .pipe(sourcemaps.init())
         .pipe(rollup({
             sourceMap: true,
             entry: './src/index.js',
@@ -49,10 +63,36 @@ gulp.task('build', function() {
                 commonjs(),
                 babel({
                     exclude: ['node_modules/**', 'bower_components/**']
-                })
+                }),
+                rollupsourcemaps()
             ]
         }))
-        //.pipe(sourcemaps.write('maps'))
+        .pipe(concat('index.js'))
+        .pipe(sourcemaps.write('maps'))
+        .pipe(gulp.dest('./dist'));
+
+    gulp.src(['./src/**/*.js', './node_modules/jquery/dist/jquery.js', './bower_components/jquery-mousewheel/jquery.mousewheel.js', './bower_components/jquery-ui/jquery-ui.js'], { base: 'src' })
+        .pipe(sourcemaps.init())
+        .pipe(rollup({
+            sourceMap: true,
+            entry: './src/core/monitor.js',
+            format: 'umd',
+            moduleName: 'Monitor',
+            plugins: [
+                resolve({
+                    jsnext: true,
+                    main: true,
+                    browser: true,
+                }),
+                commonjs(),
+                babel({
+                    exclude: ['node_modules/**', 'bower_components/**']
+                }),
+                rollupsourcemaps()
+            ]
+        }))
+        .pipe(concat('monitor.js'))
+        .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./dist'));
 })
 

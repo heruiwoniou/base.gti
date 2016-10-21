@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import './../bower_components/jquery-mousewheel/jquery.mousewheel';
 
 import Editor from './core/config';
 import BaseHtml from './core/html';
@@ -17,7 +18,6 @@ let editor_uid = 0;
 export default class HtmlEditor extends Event {
     constructor(el, options) {
         super();
-
         this.uid = editor_uid++;
         this.el = $(el);
         this.options = options || {
@@ -136,7 +136,9 @@ export default class HtmlEditor extends Event {
     _initEvents() {
         var _domEventProxy = $.proxy(this._domEventProxy, this),
             me = this;
-        $(this.doc).on('click contextmenu mousedown keydown keyup keypress selectstart', _domEventProxy);
+        $(this.doc).on('click contextmenu mousedown keydown keyup keypress selectstart mousewheel', _domEventProxy);
+        $(document).on('mousewheel', _domEventProxy);
+        $(window).on('resize', _domEventProxy)
         $(this.win).on('focus blur', _domEventProxy);
         $(this.win).on('click', function() {
             me.fireEvent('afterwindowclick');

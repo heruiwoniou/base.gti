@@ -20,5 +20,8 @@
   },
   "keywords": [
     "editor"
-  ]
+  ],
+  "devDependencies": {
+    "jquery-mousewheel": "^3.1.13"
+  }
 }

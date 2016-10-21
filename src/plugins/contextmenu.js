@@ -18,8 +18,20 @@ class ContextMenu extends Event {
         this._renderContent(items);
         this.cm.css({
             left: x,
-            top: y
+            top: y,
+            marginLeft: '-9000px'
         }).show();
+        var cmw = this.cm.width();
+        var cmh = this.cm.height();
+        if (x + cmw > document.body.offsetWidth) {
+            this.cm.css({
+                left: x - cmw
+            })
+        }
+
+        this.cm.css({
+            marginLeft: 0
+        })
     }
 
     hide() {
@@ -38,11 +50,31 @@ class ContextMenu extends Event {
         this._initDomEvent();
 
         this.on('click', function(type, e) {
-            var cmd;
-            if (cmd = e.target.getAttribute('command'))
-                that.fireEvent('itemclick', that.sourceInstance, e.target.getAttribute('command'), e);
+            var cmd, target = e.target;
+            if (target.className.indexOf('item') == -1)
+                while ((target = target.parentElement) && target.className.indexOf('item') == -1 && target.className != 'contextmenu') continue;
+            if (target && (cmd = target.getAttribute('command')))
+                that.fireEvent('itemclick', that.sourceInstance, target.getAttribute('command'), e);
+            else return false;
             that.editor.fireEvent('selectionchange');
         });
+
+        this.on('mouseover', function(type, e) {
+            var el = e.target || e.toElement,
+                dl = 'swap-display-left',
+                dr = 'swap-display-right';
+            if (!el.getAttribute('command')) {
+                var $parent = $(el.parentElement);
+                var $ul = $parent.find('ul:first')
+                var w = $parent.offset().left + $parent.width() + $ul.width();
+                var d = w > (document.body.offsetWidth - 10);
+                $parent.removeClass(d ? dr : dl).addClass(d ? dl : dr);
+            }
+        })
+
+        this.editor.on('mousewheel selectionchange resize', function(type) {
+            that.editor.execCommand('contextmenuhide')
+        })
     }
 
     _renderContent(items, deep = 0) {
@@ -53,32 +85,45 @@ class ContextMenu extends Event {
             last;
         while (++i != items.length) {
             let item = items[i],
+                hasChild = false,
                 li = document.createElement('li');
             if (item === '-' || !item) {
                 li.className = 'line';
-                if (last.className == 'line') continue;
+                if (last && last.className == 'line') continue;
             } else {
                 let text = document.createElement('a');
-                text.innerHTML = item.text;
+                let icon = document.createElement('i');
+                let txt = document.createTextNode(item.text);
+                icon.className = item.cls ? item.cls : ''
+                text.appendChild(icon);
+                text.appendChild(txt);
                 text.className = 'item';
                 if (item.command) text.setAttribute('command', item.command)
                 text.setAttribute('deep', deep);
                 li.appendChild(text);
                 if (item.items && item.items !== 0) {
                     let childNode = this._renderContent(item.items, deep + 1);
-                    li.appendChild(childNode);
+                    if (childNode) {
+                        li.appendChild(childNode);
+                        hasChild = true;
+                    }
                 }
             }
-            frag.appendChild(li);
-            last = li;
+            if (!(item && !item.command && !hasChild) || item === '-' || !item) {
+                frag.appendChild(li);
+                last = li;
+            }
         }
-        //clear end node
-        i = j = frag.children.length;
-        while (--j >= 0) {
-            node = frag.children[j];
-            if (i - 1 === j && node.className === 'line') frag.removeChild(node);
+        //clear start/end node
+        let start, end;
+        while (frag.children.length !== 0) {
+            start = frag.children[0];
+            end = frag.children[frag.children.length - 1];
+            if (!(start.className === 'line' ? frag.removeChild(start) : false) &&
+                !(end.className === 'line' ? frag.removeChild(end) : false))
+                break;
         }
-        return deep == 0 ? this.cm.get(0).appendChild(frag) : frag;
+        return deep == 0 ? this.cm.get(0).appendChild(frag) : (frag.childNodes.length == 0 ? null : frag);
     }
 
     _destroyContent() {
@@ -86,7 +131,7 @@ class ContextMenu extends Event {
     }
 
     _initDomEvent() {
-        this.cm.on('click mousedown mouseup', '.item', $.proxy(this._itemEventProxy, this));
+        this.cm.on('click mouseover', '.item', $.proxy(this._itemEventProxy, this));
     }
 
     _itemEventProxy(e) {
