@@ -11,7 +11,7 @@ export const assign = function(to, from) {
         if (!hasOwn(to, key)) {
             to[key] = fromVal;
         } else if (isObject(toVal) && isObject(fromVal)) {
-            assign(toVal, fromVal);
+            arguments.callee(toVal, fromVal);
         }
     }
     return to

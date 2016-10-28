@@ -11,40 +11,40 @@ const VARIABLE_TYPE = {
     NUMBER: '[object Number]'
 }
 
-export const isUndefined = function() {
+export function isUndefined() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.UNDEFINED;
 }
-export const isNull = function() {
+export function isNull() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.NULL;
 }
-export const isFunction = function() {
+export function isFunction() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.FUNCTION;
 }
-export const isObject = function() {
+export function isObject() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.ARRAY;
 }
-export const isArray = function() {
+export function isArray() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.ARRAY;
 }
-export const isBoolean = function() {
+export function isBoolean() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.BOOLEAN;
 }
-export const isString = function() {
+export function isString() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.STRING;
 }
-export const isNumber = function() {
+export function isNumber() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.NUMBER;
 }
 
-export const _isConstructorDontEnum = function() {
+export function isConstructorDontEnum() {
     for (var key in { constructor: 1 }) {
         if (key === 'constructor') { return false; }
     }
@@ -53,6 +53,6 @@ export const _isConstructorDontEnum = function() {
 
 var hasOwnProperty = Object.prototype.hasOwnProperty
 
-export const hasOwn = function(obj, key) {
+export function hasOwn(obj, key) {
     return hasOwnProperty.call(obj, key)
 }

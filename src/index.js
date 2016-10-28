@@ -1,15 +1,8 @@
-import Class from './core/class';
-Class('Widgets.base', {
-    constructor() {
-        this.a = 1;
-        this.b = 2;
-    }
-})
-export default Class('Widgets.bar', {
-    base: 'Widgets.base',
-    constructor() {
-        this.callParent();
-        this.c = 3;
-        this.d = 4;
-    }
-})
+import {
+    ElBase
+} from './ui';
+
+var div = document.createElement('div');
+var instance = new ElBase(div, { a: 1, b: 2 });
+
+export default instance;

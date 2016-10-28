@@ -2,7 +2,7 @@ import {
     isFunction,
     isString,
     isObject,
-    _isConstructorDontEnum,
+    isConstructorDontEnum,
     hasOwn
 } from './../util'
 
@@ -33,12 +33,12 @@ function setInherit(to, from, deep = 0) {
             to[key] = isFunction(toVal) ? callParent(toVal, fromVal) : fromVal;
         } else if (isObject(fromVal)) {
             if (!hasOwn(to, key)) { to[key] = {}; }
-            setInherit(to[key], fromVal, deep++);
+            arguments.callee(to[key], fromVal, deep++);
         } else {
             to[key] = fromVal;
         }
     }
-    if (deep === 0 && _isConstructorDontEnum() && to.constructor) {
+    if (deep === 0 && isConstructorDontEnum() && to.constructor) {
         to.constructor = callParent(to.constructor, from.constructor);
     }
 
@@ -72,7 +72,6 @@ function Class(sub, options) {
     setInherit(subclassProto, options);
     sub = namespace[sub] = subclassProto.constructor;
     sub.prototype = subclassProto;
-    sub.prototype.constructor = sub;
     if (Object.defineProperty) {
         Object.defineProperty(sub.prototype, 'constructor', {
             enumerable: false
