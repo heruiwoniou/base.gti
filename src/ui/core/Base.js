@@ -8,6 +8,7 @@ let uid = 0;
 export const Base = Class('ui.core.Base', {
     base: Event,
     constructor(setting) {
+        this.super();
         this.setting = assign({}, setting);
         this.uid = uid++;
     }

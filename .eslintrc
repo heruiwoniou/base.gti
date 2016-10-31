@@ -46,7 +46,7 @@
         "no-labels": 2, //无用的标记
         "no-extend-native": 2, //禁止扩展原生对象
         "no-floating-decimal": 2, //浮点型需要写全 禁止.1 或 2.写法
-        "no-loop-func": 2, //禁止在循环体中定义函数
+        "no-loop-func": 1, //禁止在循环体中定义函数
         "no-new-func": 2, //禁止new Function(...) 写法
         "no-self-compare": 2, //不允与自己比较作为条件
         "no-sequences": 2, //禁止可能导致结果不明确的逗号操作符

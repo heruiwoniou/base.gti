@@ -1,8 +1,9 @@
 import {
-    ElBase
+    ElBase,
+    query
 } from './ui';
 
-var div = document.createElement('div');
-var instance = new ElBase(div, { a: 1, b: 2 });
 
-export default instance;
+var b = new ElBase(document.createElement('div'), { a: 1, b: 1 });
+var a = query('body span')
+export default {};
