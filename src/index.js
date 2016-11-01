@@ -1,5 +1,4 @@
 import {
-    ElBase,
     selector
 } from './ui';
 

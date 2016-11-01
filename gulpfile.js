@@ -16,11 +16,12 @@ var gulp = require('gulp'),
 
     sourcemaps = require('gulp-sourcemaps'),
     rollupsourcemaps = require('rollup-plugin-sourcemaps'),
+    connect = require('gulp-connect'),
 
     banner =
     '\n/*!\n' +
-    ' * LBase.js v0.0.1\n' +
-    ' * (c) ' + new Date().getFullYear() + ' heruiwoniou\n' +
+    ' * library-base.js v0.0.1\n' +
+    ' * (c) ' + new Date().getFullYear() + ' heruiwoniou/xiaohongmei/dengfan\n' +
     ' * Released under the MIT License.\n' +
     ' */\n'
 
@@ -55,6 +56,12 @@ gulp.task('clean', function() {
         .pipe(clean());
 })
 
+gulp.task('connect', function() {
+    connect.server({
+        port: 3000
+    });
+});
+
 gulp.task('build', ['lint'], function() {
     gulp.src(['./src/**/*.js'], { base: 'src' })
         //.pipe(sourcemaps.init())
@@ -82,7 +89,7 @@ gulp.task('build', ['lint'], function() {
         .pipe(gulp.dest('./dist'));
 })
 
-gulp.task('default', ['clean'], function() {
+gulp.task('default', ['clean', 'connect'], function() {
     gulp.run('build', 'css');
 
     gulp.watch([
