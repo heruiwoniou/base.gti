@@ -5,5 +5,5 @@ import {
 
 
 var b = new ElBase(document.createElement('div'), { a: 1, b: 1 });
-var a = query('body span')
+query('body span').hide();
 export default {};

@@ -25,16 +25,16 @@ var Selector = Class('ui.core.Selector', {
         }
         return this;
     },
-    each(fuc){
-        forEach.call(this,fuc);
+    each(fuc) {
+        forEach.call(this, fuc);
         return this;
     },
     /**
      * [addClass description]
      * 添加样式
      */
-    addClass(){
-        return this.each(function(el){
+    addClass() {
+        return this.each(function(el) {
 
         });
     },
@@ -43,8 +43,8 @@ var Selector = Class('ui.core.Selector', {
      * 移除样式
      * @return {[type]} [description]
      */
-    removeClass(){
-        return this.each(function(el){
+    removeClass() {
+        return this.each(function(el) {
 
         });
     },
@@ -53,8 +53,8 @@ var Selector = Class('ui.core.Selector', {
      * 添加属性
      * @return {[type]} [description]
      */
-    attr(){
-        return this.each(function(el){
+    attr() {
+        return this.each(function(el) {
 
         });
     },
@@ -63,8 +63,8 @@ var Selector = Class('ui.core.Selector', {
      * 移除属性
      * @return {[type]} [description]
      */
-    removeAttr(){
-        return this.each(function(el){
+    removeAttr() {
+        return this.each(function(el) {
 
         });
     },
@@ -73,8 +73,8 @@ var Selector = Class('ui.core.Selector', {
      * 移除dom
      * @return {[type]} [description]
      */
-    remove(){
-        return this.each(function(el){
+    remove() {
+        return this.each(function(el) {
 
         });
     },
@@ -83,14 +83,14 @@ var Selector = Class('ui.core.Selector', {
      * 清空dom
      * @return {[type]} [description]
      */
-    empty(){
-        return this.each(function(el){
+    empty() {
+        return this.each(function(el) {
 
         });
     }
 });
 
-Selector.use = function(proto){
+Selector.use = function(proto) {
     assign(Selector.prototype, proto);
 }
 

@@ -1,10 +1,8 @@
 export default {
-	show(){
-		return this.each(el=>{
-		})
-	},
-	hide(){
-		return this.each(el=>{
-		})
-	}
+    show() {
+        return this.each(function(el) { el.style.display = 'block' })
+    },
+    hide() {
+        return this.each(function(el) { el.style.display = 'none' })
+    }
 }
