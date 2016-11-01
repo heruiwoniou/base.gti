@@ -62,7 +62,7 @@ gulp.task('build', ['lint'], function() {
             sourceMap: true,
             entry: './src/index.js',
             format: 'umd',
-            moduleName: 'LBase',
+            moduleName: 'selector',
             plugins: [
                 resolve({
                     jsnext: true,
