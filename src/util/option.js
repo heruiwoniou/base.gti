@@ -4,8 +4,8 @@ import {
 } from './lang';
 
 export const assign = function(to, ...froms) {
-    var from ,toVal, fromVal, key;
-    for (var i = 0; i < froms.length; i++){
+    var from, toVal, fromVal, key;
+    for (var i = 0; i < froms.length; i++) {
         from = froms[i];
         for (key in from) {
             toVal = to[key]

@@ -12,7 +12,7 @@
         "no-extra-parens": 1, //多余的括号
         "no-empty": 1, //空代码块
         "no-use-before-define": [1, "nofunc"], //使用前未定义
-        "complexity": [1, 10], //圈复杂度大于10 警告
+        "complexity": [1, 100], //圈复杂度大于10 警告
 
         //常见错误
         "comma-dangle": [2, "never"], //定义数组或对象最后多余的逗号
@@ -51,7 +51,7 @@
         "no-self-compare": 2, //不允与自己比较作为条件
         "no-sequences": 2, //禁止可能导致结果不明确的逗号操作符
         "no-throw-literal": 2, //禁止抛出一个直接量 应是Error对象
-        "no-return-assign": [2, "always"], //不允return时有赋值操作
+        "no-return-assign": [0, "always"], //不允return时有赋值操作
         "no-redeclare": [2, { "builtinGlobals": true }], //不允许重复声明
         "no-unused-expressions": [2, { "allowShortCircuit": true, "allowTernary": true }], //未使用的表达式
         "no-useless-call": 2, //无意义的函数call或apply
@@ -59,6 +59,6 @@
         "no-void": 2, //禁用void
         "no-with": 2, //禁用with
         "no-warning-comments": [2, { "terms": ["todo", "fixme", "any other term"], "location": "anywhere" }], //标记未写注释
-        "curly": 2 //if、else、while、for代码块用{}包围
+        "curly": 1 //if、else、while、for代码块用{}包围
     }
 }

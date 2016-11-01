@@ -3,7 +3,8 @@ import {
     isString,
     isObject,
     isConstructorDontEnum,
-    hasOwn
+    hasOwn,
+    assign
 } from './../util'
 
 import {
@@ -13,12 +14,12 @@ import {
 
 var overwrite = function(to, from) {
     return function Constructor() {
-        let result, _super = this.super;
-        this.super = function() {
+        let result, _super = this.callParent;
+        this.callParent = function() {
             to.apply(this, arguments)
         }
         result = from.apply(this, arguments);
-        this.super = _super;
+        if (_super) { this.callParent = _super; } else { delete this.callParent; }
         return result;
     }
 };
@@ -45,8 +46,10 @@ function setInherit(to, from, deep = 0) {
 }
 
 function Class(sub, options) {
-    var sup, name, space, subclassProto, namespace
+    var sup, name, space, subclassProto, namespace, statics;
     sup = options.base || Object;
+    statics = options.static || {};
+    if (options.static) { delete options.static; }
     if (options.base) { delete options.base; }
     if (isString(sup)) { sup = getClassByNamespace(sup); }
     namespace = options.namespace || Classes;
@@ -74,7 +77,8 @@ function Class(sub, options) {
             enumerable: false
         });
     }
-    sub.prototype.super = function() {};
+
+    assign(sub, statics);
 
     return sub;
 }
