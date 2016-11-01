@@ -1,4 +1,6 @@
-var gulp = require('gulp'),
+var
+    net = require('net'),
+    gulp = require('gulp'),
     clean = require('gulp-clean'),
 
     stylus = require('gulp-stylus'),
@@ -24,6 +26,10 @@ var gulp = require('gulp'),
     ' * (c) ' + new Date().getFullYear() + ' heruiwoniou/xiaohongmei/dengfan\n' +
     ' * Released under the MIT License.\n' +
     ' */\n'
+
+/**
+ * 端口检测
+ */
 
 gulp.task('lint', function() {
     return gulp.src(['src/**/*.js', '!node_modules/**'])
@@ -57,9 +63,19 @@ gulp.task('clean', function() {
 })
 
 gulp.task('connect', function() {
-    connect.server({
-        port: 3000
-    });
+    (function(port) {
+        var s = arguments.callee;
+        var server = net.createServer().listen(port);
+        server.on('listening', function() {
+            server.close()
+            connect.server({
+                port: port
+            });
+        });
+        server.on('error', function() {
+            s(port++);
+        })
+    })(3000)
 });
 
 gulp.task('build', ['lint'], function() {
