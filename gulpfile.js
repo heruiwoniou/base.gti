@@ -18,7 +18,7 @@ var
 
     sourcemaps = require('gulp-sourcemaps'),
     rollupsourcemaps = require('rollup-plugin-sourcemaps'),
-    ssserver = require('gulp-ss-server'),
+    server = require('gulp-ss-server'),
 
     banner =
     '\n/*!\n' +
@@ -59,23 +59,9 @@ gulp.task('clean', function() {
 })
 
 gulp.task('connect', function() {
-    console.log(ssserver);
-    ssserver.run({
+    server.run({
         port: 3000
     });
-    // (function(port) {
-    //     var s = arguments.callee;
-    //     var server = net.createServer().listen(port);
-    //     server.on('listening', function() {
-    //         server.close()
-    //         connect.server({
-    //             port: port
-    //         });
-    //     });
-    //     server.on('error', function() {
-    //         s(port++);
-    //     })
-    // })(3000)
 });
 
 gulp.task('build', ['lint'], function() {
