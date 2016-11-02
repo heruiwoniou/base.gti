@@ -16,28 +16,29 @@ var Selector = Class('ui.core.Selector', {
         let nodes;
         if (!selector) { return this; }
         if (selector.nodeType) {
-            this[0] = selector;
-            this.length = 1;
+            this.push(selector);
         } else if (isString(selector)) {
             nodes = document.querySelectorAll(selector);
-            if (!nodes) {
+            if (nodes.length === 0) {
                 this.length = 0;
             } else {
-                forEach.call(nodes, o => push.call(this, o));
+                forEach.call(nodes, o => this.push(o));
             }
+        } else {
+            this.length = 0;
         }
-
         this.version = "1.0.0";
-
         return this;
     },
+
     toArray() {
         slice.apply(this);
     },
-    slice:slice,
+    slice: slice,
     push: push,
-	sort: sort,
-	splice: splice,
+    sort: sort,
+    splice: splice,
+    forEach: forEach,
     each(fuc) {
         if (isFunction(fuc)) {
             forEach.call(this, fuc);
@@ -50,4 +51,5 @@ var Selector = Class('ui.core.Selector', {
         }
     }
 });
+
 export default Selector;
