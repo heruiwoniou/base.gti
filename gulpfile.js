@@ -18,7 +18,7 @@ var
 
     sourcemaps = require('gulp-sourcemaps'),
     rollupsourcemaps = require('rollup-plugin-sourcemaps'),
-    connect = require('gulp-connect'),
+    server = require('gulp-ss-server'),
 
     banner =
     '\n/*!\n' +
@@ -59,24 +59,14 @@ gulp.task('clean', function() {
 })
 
 gulp.task('connect', function() {
-    (function(port) {
-        var s = arguments.callee;
-        var server = net.createServer().listen(port);
-        server.on('listening', function() {
-            server.close()
-            connect.server({
-                port: port
-            });
-        });
-        server.on('error', function() {
-            s(port++);
-        })
-    })(3000)
+    server.run({
+        port: 3000
+    });
 });
 
 gulp.task('build', ['lint'], function() {
     gulp.src(['./src/**/*.js'], { base: 'src' })
-        //.pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(rollup({
             sourceMap: true,
             entry: './src/index.js',
@@ -92,12 +82,12 @@ gulp.task('build', ['lint'], function() {
                 babel({
                     exclude: ['node_modules/**', 'bower_components/**']
                 }),
-                //rollupsourcemaps()
+                rollupsourcemaps()
             ]
         }))
         .pipe(concat('index.js'))
         .pipe(replace(/^([\s\S])/, banner + '$1'))
-        //.pipe(sourcemaps.write('maps'))
+        .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./dist'));
 })
 
