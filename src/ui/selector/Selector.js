@@ -1,9 +1,9 @@
-import Class from './../../core';
+import Class from '../../core';
 import {
     assign,
     isString,
     isFunction
-} from './../../util'
+} from '../../util'
 
 const push = Array.prototype.push;
 const forEach = Array.prototype.forEach;
