@@ -14,8 +14,10 @@ const splice = Array.prototype.splice;
 var Selector = Class('ui.core.Selector', {
     constructor(selector) {
         let nodes;
+        this.version = "1.0.0";
+        this.length = 0;
         if (!selector) { return this; }
-        if (selector.nodeType) {
+        if (selector.nodeType || selector == window || selector == document) {
             this.push(selector);
         } else if (isString(selector)) {
             nodes = document.querySelectorAll(selector);
@@ -24,21 +26,35 @@ var Selector = Class('ui.core.Selector', {
             } else {
                 forEach.call(nodes, o => this.push(o));
             }
-        } else {
-            this.length = 0;
         }
-        this.version = "1.0.0";
         return this;
     },
 
     toArray() {
-        slice.apply(this);
+        return slice.apply(this);
     },
-    slice: slice,
-    push: push,
-    sort: sort,
-    splice: splice,
-    forEach: forEach,
+    slice() {
+        var result = slice.apply(this, arguments);
+        var instance = new this.constructor();
+        result.forEach(o => instance.push(o));
+        return instance;
+    },
+    push() {
+        push.apply(this, arguments);
+        return this;
+    },
+    sort() {
+        sort.apply(this, arguments);
+        return this;
+    },
+    splice() {
+        splice.apply(this, arguments);
+        return this;
+    },
+    forEach() {
+        forEach.apply(this, arguments);
+        return this;
+    },
     each(fuc) {
         if (isFunction(fuc)) {
             forEach.call(this, fuc);

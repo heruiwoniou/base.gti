@@ -2,6 +2,7 @@ import Selector from './Selector';
 import css from './css';
 import doc from './doc';
 import effect from './effect';
+import events from './events';
 import filter from './filter';
 import property from './property';
 
@@ -12,6 +13,7 @@ Selector.use(
     css,
     doc,
     effect,
+    events,
     filter,
     property
 );

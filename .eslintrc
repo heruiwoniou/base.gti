@@ -31,7 +31,7 @@
         "no-shadow-restricted-names": 2, //关键词与命名冲突
         "no-undef": 2, //变量未定义
         "no-unused-vars": 1, //变量定义后未使用
-        "no-cond-assign": 1, //条件语句中禁止赋值操作
+        "no-cond-assign": 0, //条件语句中禁止赋值操作
         "no-native-reassign": 2, //禁止覆盖原生对象
 
         //代码风格优化
