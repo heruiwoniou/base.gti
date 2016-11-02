@@ -66,9 +66,9 @@ gulp.task('connect', function() {
 
 gulp.task('build', ['lint'], function() {
     gulp.src(['./src/**/*.js'], { base: 'src' })
-        .pipe(sourcemaps.init())
+        //.pipe(sourcemaps.init())
         .pipe(rollup({
-            sourceMap: true,
+            //sourceMap: true,
             entry: './src/index.js',
             format: 'umd',
             moduleName: 'selector',
@@ -82,12 +82,12 @@ gulp.task('build', ['lint'], function() {
                 babel({
                     exclude: ['node_modules/**', 'bower_components/**']
                 }),
-                rollupsourcemaps()
+                //rollupsourcemaps()
             ]
         }))
         .pipe(concat('index.js'))
         .pipe(replace(/^([\s\S])/, banner + '$1'))
-        .pipe(sourcemaps.write('maps'))
+        //.pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('./dist'));
 })
 

@@ -22,3 +22,7 @@ Selector.use(
 export function selector(selector) {
     return new Selector(selector);
 }
+
+selector.use = function(...args) {
+    Selector.use(...args);
+}

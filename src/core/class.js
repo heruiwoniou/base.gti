@@ -77,7 +77,6 @@ function Class(sub, options) {
             enumerable: false
         });
     }
-
     assign(sub, statics);
 
     return sub;
