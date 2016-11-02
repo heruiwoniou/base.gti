@@ -27,10 +27,6 @@ var
     ' * Released under the MIT License.\n' +
     ' */\n'
 
-/**
- * 端口检测
- */
-
 gulp.task('lint', function() {
     return gulp.src(['src/**/*.js', '!node_modules/**'])
         .pipe(eslint({

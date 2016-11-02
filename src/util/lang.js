@@ -25,7 +25,7 @@ export function isFunction() {
 }
 export function isObject() {
     return arguments.length == 0 ? false :
-        _toString.apply(arguments[0]) === VARIABLE_TYPE.ARRAY;
+        _toString.apply(arguments[0]) === VARIABLE_TYPE.OBJECT;
 }
 export function isArray() {
     return arguments.length == 0 ? false :
@@ -35,6 +35,10 @@ export function isBoolean() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.BOOLEAN;
 }
+/**
+ * @description 检测字符串
+ * @return {boolean}
+ */
 export function isString() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.STRING;
