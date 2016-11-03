@@ -4,9 +4,15 @@ import {
     removeListener
 } from './domEvent';
 
+import {
+    isObject,
+    isFunction
+} from '../../../util'
+
 
 export default {
     addListener: function(types, listener) {
+        if (!EventType.validate(types)) return this;
         types = types.trim().split(/\s+/);
         return this.each((el, index) => {
             var i = 0,
@@ -21,16 +27,39 @@ export default {
         return this.addListener(types, listener);
     },
     removeListener: function(types, listener) {
+        if (!EventType.validate(types)) return this;
         types = types.trim().split(/\s+/);
         return this.each(el => {
             for (var i = 0, ti; ti = types[i++];) {
+                var eventType = new EventType(ti);
                 var array = getListener(el, ti) || [],
-                    item = listener
-                for (var l = array.length - 1; l >= 0; l--) {
-                    if (item && array[l] === item || !item) {
-                        array.splice(l, 1);
+                    item = listener,
+                    l, target;
+                if (eventType.group) {
+                    for (l = array.length - 1; l >= 0; l--) {
+                        target = array[l];
+                        if (isObject(target) && target.group == eventType.group) {
+                            if (item && target.listener === item || !item) {
+                                array.splice(l, 1);
+                            }
+                        }
+                    }
+                } else {
+                    for (l = array.length - 1; l >= 0; l--) {
+                        target = array[l];
+                        if (isObject(target)) {
+                            if (item && target.listener === item || !item) {
+                                array.splice(l, 1);
+                            }
+                        } else if (isFunction(target)) {
+                            if (item && array[l] === item || !item) {
+                                array.splice(l, 1);
+                            }
+                        }
+
                     }
                 }
+
                 if (array.length == 0) { removeListener(el, ti);　 }
             }
         })
@@ -39,18 +68,23 @@ export default {
         return this.removeListener(types, listener)
     },
     fireEvent: function(types, ...arg) {
+        if (!EventType.validate(types)) { return false; }
         var result = true;
         types = types.trim().split(' ');
         this.each(el => {
             for (var i = 0, ti; ti = types[i++];) {
                 var listeners = getListener(el, ti),
-                    r, k;
+                    eventType = new EventType(ti),
+                    r, start, total, listener, item;
                 if (listeners) {
-                    k = listeners.length;
-                    var start = -1;
-                    while (++start < k) {
-                        if (!listeners[start]) { continue; }
-                        r = listeners[start].call(this, ...arg);
+                    start = 0;
+                    total = listeners.length;
+                    for (; start < total; start++) {
+                        item = listeners[start];
+                        if (!item) { continue; }
+                        listener = isFunction(item) ? item : item.listener;
+                        if (eventType.group && item.group !== eventType.group) continue;
+                        r = listener.call(el, ...arg);
                         if (r === false) {
                             result = false;
                             return;

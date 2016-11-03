@@ -6,11 +6,17 @@ export function EventType(type) {
     this.fulltype = type.join('.');
 }
 
+const typereg = /^(\s*[^\.\s]+\.[^\.\s]+|\s*[^\.\s]+)*$/i;
+
 EventType.prototype.create = function(listener) {
     return this.group ? {
         group: this.group,
         listener: listener
     } : listener;
+}
+
+EventType.validate = function(type) {
+    return typereg.test(type);
 }
 
 /**
@@ -24,17 +30,18 @@ EventType.prototype.create = function(listener) {
  */
 export function getListener(element, eventtype, force, selector) {
     var allListeners = (element.__allListeners || force && (element.__allListeners = {}));
-    var { type, fulltype } = new EventType(eventtype)
+    var { type, fulltype } = new EventType(eventtype);
     if (!allListeners[type] && force) {
         allListeners[type] = {
             //用于在DOM事件通知虚拟事件
             __bind__(e) {
-                return selector.trigger(fulltype, e || window.event);
+                return selector.trigger(type, e || window.event);
             },
             __base__: []
         };
         addHandler(element, type, allListeners[type].__bind__);
     }
+    if (!allListeners || !allListeners[type]) return [];
     return allListeners[type].__base__;
 }
 
@@ -47,14 +54,16 @@ export function getListener(element, eventtype, force, selector) {
  */
 export function removeListener(element, type) {
     var allListeners = element.__allListeners;
-    type = type.toLowerCase();
-    removeHandler(element, type, allListeners[type].__bind__);
-    delete allListeners[type];
+    var eventType = new EventType(type);
+    if (allListeners && allListeners[eventType.type]) {
+        removeHandler(element, eventType.type, allListeners[eventType.type].__bind__);
+        delete allListeners[eventType.type];
+    }
 }
 
 export function addHandler(element, type, handler) {
-    if (element.addEventListner) {
-        element.addEventListner(type, handler, false);
+    if (element.addEventListener) {
+        element.addEventListener(type, handler, false);
     } else if (element.attachEvent) {
         element.attachEvent('on' + type, handler);
     } else {
