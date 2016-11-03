@@ -30,7 +30,7 @@ EventType.validate = function(type) {
  */
 export function getListener(element, eventtype, force, selector) {
     var allListeners = (element.__allListeners || force && (element.__allListeners = {}));
-    var { type, fulltype } = new EventType(eventtype);
+    var { type } = new EventType(eventtype);
     if (!allListeners[type] && force) {
         allListeners[type] = {
             //用于在DOM事件通知虚拟事件
@@ -41,7 +41,7 @@ export function getListener(element, eventtype, force, selector) {
         };
         addHandler(element, type, allListeners[type].__bind__);
     }
-    if (!allListeners || !allListeners[type]) return [];
+    if (!allListeners || !allListeners[type]) { return []; }
     return allListeners[type].__base__;
 }
 

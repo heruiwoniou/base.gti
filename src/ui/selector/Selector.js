@@ -8,13 +8,12 @@ import {
 const push = Array.prototype.push;
 const forEach = Array.prototype.forEach;
 const slice = Array.prototype.slice;
-const sort = Array.prototype.sort;
 const splice = Array.prototype.splice;
 
 var Selector = Class('ui.core.Selector', {
     constructor(selector) {
         let nodes;
-        this.version = "1.0.0";
+        this.version = '1.0.0';
         this.length = 0;
         if (!selector) { return this; }
         if (selector.nodeType || selector == window || selector == document) {
@@ -29,7 +28,6 @@ var Selector = Class('ui.core.Selector', {
         }
         return this;
     },
-
     toArray() {
         return slice.apply(this);
     },
@@ -43,16 +41,8 @@ var Selector = Class('ui.core.Selector', {
         push.apply(this, arguments);
         return this;
     },
-    sort() {
-        sort.apply(this, arguments);
-        return this;
-    },
     splice() {
         splice.apply(this, arguments);
-        return this;
-    },
-    forEach() {
-        forEach.apply(this, arguments);
         return this;
     },
     each(fuc) {

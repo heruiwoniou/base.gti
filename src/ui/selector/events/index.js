@@ -12,7 +12,7 @@ import {
 
 export default {
     addListener: function(types, listener) {
-        if (!EventType.validate(types)) return this;
+        if (!EventType.validate(types)) { return this; }
         types = types.trim().split(/\s+/);
         return this.each((el, index) => {
             var i = 0,
@@ -27,7 +27,7 @@ export default {
         return this.addListener(types, listener);
     },
     removeListener: function(types, listener) {
-        if (!EventType.validate(types)) return this;
+        if (!EventType.validate(types)) { return this; }
         types = types.trim().split(/\s+/);
         return this.each(el => {
             for (var i = 0, ti; ti = types[i++];) {
@@ -83,7 +83,7 @@ export default {
                         item = listeners[start];
                         if (!item) { continue; }
                         listener = isFunction(item) ? item : item.listener;
-                        if (eventType.group && item.group !== eventType.group) continue;
+                        if (eventType.group && item.group !== eventType.group) { continue; }
                         r = listener.call(el, ...arg);
                         if (r === false) {
                             result = false;
