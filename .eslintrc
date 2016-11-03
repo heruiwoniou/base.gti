@@ -10,7 +10,7 @@
         "no-extra-boolean-cast": 1, //多余的感叹号转布尔型
         "no-extra-semi": 1, //多余的分号
         "no-extra-parens": 0, //多余的括号
-        "no-empty": 1, //空代码块
+        "no-empty": 0, //空代码块
         "no-use-before-define": [1, "nofunc"], //使用前未定义
         "complexity": [1, 100], //圈复杂度大于10 警告
 

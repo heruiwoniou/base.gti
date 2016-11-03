@@ -72,11 +72,11 @@ function Class(sub, options) {
     sub = namespace[sub] = subclassProto.constructor;
     sub.prototype = subclassProto;
     sub.prototype.constructor = sub;
-    if (Object.defineProperty) {
+    try {
         Object.defineProperty(sub.prototype, 'constructor', {
             enumerable: false
         });
-    }
+    } catch (e) {}
     assign(sub, statics);
 
     return sub;

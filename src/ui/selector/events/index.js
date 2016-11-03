@@ -6,14 +6,15 @@ import {
 
 import {
     isObject,
-    isFunction
+    isFunction,
+    trim
 } from '../../../util'
 
 
 export default {
     addListener: function(types, listener) {
         if (!EventType.validate(types)) { return this; }
-        types = types.trim().split(/\s+/);
+        types = trim(types).split(/\s+/);
         return this.each((el, index) => {
             var i = 0,
                 ti;
@@ -28,7 +29,7 @@ export default {
     },
     removeListener: function(types, listener) {
         if (!EventType.validate(types)) { return this; }
-        types = types.trim().split(/\s+/);
+        types = trim(types).split(/\s+/);
         return this.each(el => {
             for (var i = 0, ti; ti = types[i++];) {
                 var eventType = new EventType(ti);
@@ -70,7 +71,7 @@ export default {
     fireEvent: function(types, ...arg) {
         if (!EventType.validate(types)) { return false; }
         var result = true;
-        types = types.trim().split(' ');
+        types = trim(types).split(' ');
         this.each(el => {
             for (var i = 0, ti; ti = types[i++];) {
                 var listeners = getListener(el, ti),
