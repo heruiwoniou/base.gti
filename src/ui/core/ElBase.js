@@ -9,5 +9,6 @@ export const ElBase = Class('ui.core.ElBase', {
     },
     initialize() {
         this.el.setAttribute('uid', this.uid);
+        return this;
     }
 })
