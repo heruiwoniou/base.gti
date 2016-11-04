@@ -16,5 +16,8 @@ export default {
             return this[0].getAttribute(props);
         }
         return this;
+    },
+    removeAttr(prop) {
+        return this.each(el => el.removeAttribute(prop));
     }
 }
