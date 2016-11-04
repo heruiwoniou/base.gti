@@ -19,10 +19,3 @@ export function assign(to, ...froms) {
     }
     return to
 }
-export function trim(obj) {
-    return obj.replace(/\s*&/i, '');
-}
-export const push = Array.prototype.push;
-export const forEach = Array.prototype.forEach || function(fn) { for (var i = 0; i < this.length; i++) { fn.call(this[i], this[i], i); } };
-export const slice = Array.prototype.slice;
-export const splice = Array.prototype.splice;

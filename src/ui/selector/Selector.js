@@ -14,6 +14,7 @@ var Selector = Class('ui.core.Selector', {
         let nodes;
         this.version = '1.0.0';
         this.length = 0;
+        this.prevObject = this;
         if (!selector) { return this; }
         if (selector.nodeType || selector == window || selector == document) {
             this.push(selector);
@@ -33,6 +34,7 @@ var Selector = Class('ui.core.Selector', {
     slice() {
         var result = slice.apply(this, arguments);
         var instance = new this.constructor();
+        instance.prevObject = this;
         forEach.call(result, o => instance.push(o));
         return instance;
     },

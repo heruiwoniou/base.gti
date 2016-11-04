@@ -1,25 +1,19 @@
 import {
     isObject,
-    isString
+    isString,
+    propFormat
 } from './../../../util'
 
 export default {
-    css(setting) {
-        return this.each(el => {
-            if (isObject(setting)) {
-                //console.log(setting)
-                for (var prop in setting) {
-                    el.style[prop] = setting[prop]
+    css(props) {
+        if (isObject(props)) {
+            return this.each(el => {
+                for (var prop in props) {
+                    el.style[propFormat(prop)] = props[prop]
                 }
-            } else if (isString(setting)) {
-                console.log(setting)
-
-            }
-        });
+            });
+        } else if (isString(props)) {
+            return this[0].style[propFormat(props)];
+        }
     }
 }
-/**
- * $(selector).css({a:'b'});
- * $(selector).css("width")
- * 
- */
