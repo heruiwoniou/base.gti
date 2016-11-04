@@ -10,7 +10,6 @@ import {
     trim
 } from '../../../util'
 
-
 export default {
     addListener: function(types, listener) {
         if (!EventType.validate(types)) { return this; }
