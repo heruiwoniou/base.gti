@@ -15,5 +15,6 @@ export default {
         } else if (isString(props)) {
             return this[0].style[propFormat(props)];
         }
+        return this;
     }
 }

@@ -2,12 +2,9 @@ import Class from '../../core';
 import {
     assign,
     isString,
-    isFunction,
-    forEach,
-    push,
-    slice,
-    splice
+    forEach
 } from '../../util'
+import core from './core';
 
 var Selector = Class('ui.core.Selector', {
     constructor(selector) {
@@ -28,35 +25,13 @@ var Selector = Class('ui.core.Selector', {
         }
         return this;
     },
-    toArray() {
-        return slice.apply(this);
-    },
-    slice() {
-        var result = slice.apply(this, arguments);
-        var instance = new this.constructor();
-        instance.prevObject = this;
-        forEach.call(result, o => instance.push(o));
-        return instance;
-    },
-    push() {
-        push.apply(this, arguments);
-        return this;
-    },
-    splice() {
-        splice.apply(this, arguments);
-        return this;
-    },
-    each(fuc) {
-        if (isFunction(fuc)) {
-            forEach.call(this, fuc);
-        }
-        return this;
-    },
     static: {
         use(...arg) {
             assign(Selector.prototype, ...arg);
         }
     }
 });
+
+Selector.use(core);
 
 export default Selector;

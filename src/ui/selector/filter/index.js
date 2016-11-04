@@ -1,6 +1,7 @@
 import {
     forEach
 } from '../../../util'
+
 export default {
     find(selector) {
         var instance = new this.constructor();
