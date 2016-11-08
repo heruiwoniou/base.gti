@@ -11,7 +11,7 @@ th()
 		/* @meta {"spritesheet": {"include": false}} */
 		background: url(images/loading.png) no-repeat center;
 		background-color: #ccc;
-		margin:0.41em 0 1.2em 0;
+		margin:5px 0 10px 0;
 		img
 			ib()
 			transition opacity .2s ease
@@ -21,8 +21,8 @@ th()
 				opacity 1
 	div,ul,li,h1,h2,h3,span,i,b,p
 		font-family: "Microsoft YaHei";
-		margin: 0;
-		padding:0;
+		margin: 0px;
+		padding:0px;
 		font-size:1em;
 		font-weight: normal;
 	margin:0 auto;
@@ -32,29 +32,29 @@ th()
 	//font-size:0px;
 	ib()
 	.sw-banner-3d-container
-		max-width: 108.3em;
+		max-width: 1300px;
 		line-height: 1;
 		ib()
 		text-align: center;
 		height: 100%;
 		width: 100%;
 		.sw-banner-3d-header
-			height: 7em;
+			height: 85px;
 			ul
 				margin:0px;
 				padding:0px;
-				height: 7em;
-				line-height: 7em;
+				height: 85px;
+				line-height: 85px;
 				li
 					display: inline-block;
-					padding:1.6em;
-					height: 7em;
+					padding:20px;
+					height: 85px;
 					box-sizing: border-box;
-					line-height: 3.75em;
+					line-height: 45px;
 					position: relative;
 					a
 						display: block;
-						padding:0 3.3em;
+						padding:0 40px;
 						color: white;
 						font-size:1.5em;
 						text-decoration: none;
@@ -70,29 +70,29 @@ th()
 							background: rgba(255,255,255,.5);
 						}
 						.line-top
-							top: 1.2em;
+							top: 10px;
 							left: 0px;
-							height: 0.083em;
-							width: 6.66em;
+							height: 1px;
+							width: 80px;
 						.line-left
-							left:1.2em;
+							left:10px;
 							top:0px;
-							width: 0.083em;
-							height: 3.33em;
+							width: 1px;
+							height: 40px;
 						.line-right
-							height: 3.33em;
-							width:0.083em;
-							right:1.2em;
+							height: 40px;
+							width:1px;
+							right:10px;
 							bottom:0px;
 						.line-bottom
-							width: 6.66em;
-							height: 0.083em;
+							width: 80px;
+							height: 1px;
 							right:0px;
-							bottom:1.2em;
+							bottom:10px;
 		.sw-banner-3d-content
 			-moz-user-select:none;
 			cursor: default;
-			height: 50em;
+			height: 600px;
 			position: relative;
 			.sw-banner-3d-item
 				box-sizing: border-box;
@@ -108,7 +108,7 @@ th()
 					opacity: .5;
 					filter:unquote('alpha(opacity=50)')
 				.after
-					padding: 1.66em;
+					padding: 20px;
 					box-sizing: border-box;
 				h1
 					th();
@@ -123,15 +123,15 @@ th()
 					text-indent: 2em;
 					white-space: normal;
 					line-height: 1.3
-					height: 10.08em;
+					height: 145px;
 					color:#1b3144;
-					margin-bottom:0.66em;
+					margin-bottom:8px;
 					overflow: hidden;
 				.control
 					line-height: 40px;
 					.more
-						line-height: 3.33em;
-						padding:0 2.5em;
+						line-height: 40px;
+						padding:0 30px;
 						background: #796159;
 						float: left;
 						color:white;
@@ -139,14 +139,14 @@ th()
 					.time
 						color:#76818b;
 						float:right;
-						margin-right:0.41em;
+						margin-right:5px;
 			.first
 			.last
 				position: absolute;
 				top:50%;
-				margin-top:-12.91em;
-				width: 31.66em;
-				height: 25.83em;
+				margin-top:-155px;
+				width: 380px;
+				height: 310px;
 				h1
 					text-align: left;
 					font-size: 1.16em;
@@ -157,17 +157,16 @@ th()
 					text-indent: 2em;
 					white-space: normal;
 					line-height: 1.3
-					height: 5em;;
+					height: 60px;
 					color:#1b3144;
 					overflow: hidden;
 				.img-container
-					width: 28.33em;
-					height: 10.83em;
-					margin:0.41em 0;
+					width: 340px;
+					height: 130px;
 			.first
-				left:3.75em;
+				left:45px;
 			.last
-				right:3.75em;
+				right:45px;
 			.current
 				.before
 					opacity: 1;
@@ -176,32 +175,32 @@ th()
 				position: absolute;
 				left:50%;
 				top:50%;
-				width: 48.33em;
-				height: 40.83em;
-				margin-top:-20.41em;
-				margin-left:-24.16em;
+				width: 580px;
+				height: 490px;
+				margin-top:-245px;
+				margin-left:-290px;
 				.img-container
-					width: 45em;
-					height: 18.33em;
+					width: 540px;
+					height: 220px;
 		.sw-banner-3d-more
-			height: 8.33em;
-			line-height: 8.33em;
+			height: 100px;
+			line-height: 100px;
 			//font-size:0px;
 			a.more
 				ib()
-				height: 7.91em;
-				width: 7.91em;
+				height: 95px;
+				width: 95px;
 				background: url(sprite/more.png) no-repeat;
-				margin:0 1.66em;
+				margin:0 20px;
 				transition: margin .1s ease ,opacity .1s ease;
 				opacity: .8
 				&:hover
 					opacity: 1
-					margin:0 1.2em;
+					margin:0 10px;
 			span
 				ib()
-				width: 5em;
-				height: 1.58em;
+				width: 60px;
+				height: 19px;
 				&.more-left
 					background: url(sprite/more-left.png) no-repeat;
 				&.more-right

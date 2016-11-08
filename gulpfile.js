@@ -13,10 +13,10 @@ gulp.task('css', function() {
     gulp.run('image');
     return gulp.src('src/style/*.styl')
         .pipe(stylus({ use: [autoprefixer({ browsers: ['last 2 versions', 'ie >= 8'], cascade: false })] }))
-        .pipe(spriter({
-            'spriteSheet': 'dist/style/images/sprite.png',
-            'pathToSpriteSheetFromCSS': 'images/sprite.png'
-        }))
+        // .pipe(spriter({
+        //     'spriteSheet': 'dist/style/images/sprite.png',
+        //     'pathToSpriteSheetFromCSS': 'images/sprite.png'
+        // }))
         .pipe(gulp.dest('dist/style'));
 })
 
