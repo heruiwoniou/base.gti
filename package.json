@@ -1,0 +1,19 @@
+{
+  "name": "widgets-swbanner-3d",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer-stylus": "^0.11.0",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-css-spriter": "^0.3.3",
+    "gulp-ss-server": "0.0.4",
+    "gulp-stylus": "^2.6.0"
+  }
+}
