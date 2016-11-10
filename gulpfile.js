@@ -33,7 +33,7 @@ gulp.task('clean', function() {
 
 gulp.task('script', function() {
     return gulp.src([
-        'src/index.js'
+        'src/*.js'
     ]).pipe(gulp.dest('dist'));
 })
 
