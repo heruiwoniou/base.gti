@@ -1,9 +1,30 @@
-<!DOCTYPE html>
+<!DOCTYPE shtml>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
+    <style>
+        .box {
+            height: 20px;
+            width: 200px;
+            border: 1px solid black;
+        }
+        
+        .style-1 {
+            background: red;
+        }
+        
+        .style-2 {
+            background: blue;
+        }
+        
+        .style-3 {
+            background: green;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,6 +38,9 @@
         <option value="0">1</option>
         <option value="1">2</option>
     </select>
+    <div class="box style-1"></div>
+    <div class="box style-2" style="position:absolute;right:0"></div>
+    <div class="box style-3"></div>
 </body>
 <script src="dist/index.js"></script>
 <!--<script src="bower_components/jquery/dist/jquery.js"></script>-->

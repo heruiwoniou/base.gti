@@ -19,7 +19,7 @@ export function assign(to, ...froms) {
             if (!hasOwn(to, key)) {
                 to[key] = fromVal;
             } else if (isObject(toVal) && isObject(fromVal)) {
-                arguments.callee(toVal, fromVal);
+                assign(toVal, fromVal);
             }
         }
     }

@@ -1,6 +1,5 @@
 import Class from '../../core';
 import {
-    assign,
     isString,
     forEach
 } from '../../util'
@@ -24,11 +23,6 @@ var Selector = Class('ui.core.Selector', {
             }
         }
         return this;
-    },
-    static: {
-        use(...arg) {
-            assign(Selector.prototype, ...arg);
-        }
     }
 });
 

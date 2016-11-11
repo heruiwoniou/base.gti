@@ -1,8 +1,9 @@
 import {
-    EventType,
     getListener,
     removeListener
 } from './domEvent';
+
+import EventFactory from '../../core/EventFactory';
 
 import {
     isObject,
@@ -12,13 +13,13 @@ import {
 
 export default {
     addListener: function(types, listener) {
-        if (!EventType.validate(types)) { return this; }
+        if (!EventFactory.isFull(types)) { return this; }
         types = trim(types).split(/\s+/);
         return this.each((el, index) => {
             var i = 0,
                 ti;
             for (; ti = types[i++];) {
-                var eventType = new EventType(ti);
+                var eventType = new EventFactory(ti);
                 getListener(el, ti, true, this.slice(index, index + 1)).push(eventType.create(listener));
             }
         })
@@ -27,11 +28,11 @@ export default {
         return this.addListener(types, listener);
     },
     removeListener: function(types, listener) {
-        if (!EventType.validate(types)) { return this; }
+        if (!EventFactory.isHalf(types)) { return this; }
         types = trim(types).split(/\s+/);
         return this.each(el => {
             for (var i = 0, ti; ti = types[i++];) {
-                var eventType = new EventType(ti);
+                var eventType = new EventFactory(ti);
                 var array = getListener(el, ti) || [],
                     item = listener,
                     l, target;
@@ -68,13 +69,13 @@ export default {
         return this.removeListener(types, listener)
     },
     fireEvent: function(types, ...arg) {
-        if (!EventType.validate(types)) { return false; }
+        if (!EventFactory.isHalf(types)) { return false; }
         var result = true;
         types = trim(types).split(' ');
         this.each(el => {
             for (var i = 0, ti; ti = types[i++];) {
                 var listeners = getListener(el, ti),
-                    eventType = new EventType(ti),
+                    eventType = new EventFactory(ti),
                     r, start, total, listener, item;
                 if (listeners) {
                     start = 0;

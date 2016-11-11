@@ -33,7 +33,7 @@ function setInherit(to, from, deep = 0) {
             to[key] = isFunction(toVal) ? overwrite(toVal, fromVal) : fromVal;
         } else if (isObject(fromVal)) {
             if (!hasOwn(to, key)) { to[key] = {}; }
-            arguments.callee(to[key], fromVal, deep++);
+            setInherit(to[key], fromVal, deep++);
         } else {
             to[key] = fromVal;
         }
@@ -48,8 +48,8 @@ function setInherit(to, from, deep = 0) {
 function Class(sub, options) {
     var sup, name, space, subclassProto, namespace, statics;
     sup = options.base || Object;
-    statics = options.static || {};
-    if (options.static) { delete options.static; }
+    statics = options.statics || {};
+    if (options.statics) { delete options.statics; }
     if (options.base) { delete options.base; }
     if (isString(sup)) { sup = getClassByNamespace(sup); }
     namespace = options.namespace || Classes;
@@ -77,7 +77,12 @@ function Class(sub, options) {
             enumerable: false
         });
     } catch (e) {}
-    assign(sub, statics);
+
+    assign(sub, statics, {
+        use(...arg) {
+            assign(sub.prototype, ...arg);
+        }
+    });
 
     return sub;
 }
