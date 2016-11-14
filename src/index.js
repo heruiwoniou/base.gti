@@ -1,5 +1,6 @@
 import {
-    selector
+    selector,
+    ElBase
 } from './ui';
 
-export default selector;
+export default ElBase;

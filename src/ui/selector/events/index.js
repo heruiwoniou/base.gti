@@ -1,9 +1,10 @@
 import {
+    allscope,
     getListener,
     removeListener
 } from './domEvent';
 
-import EventFactory from '../../core/EventFactory';
+import { EventFactory } from '../../core/event';
 
 import {
     isObject,
@@ -32,36 +33,39 @@ export default {
         types = trim(types).split(/\s+/);
         return this.each(el => {
             for (var i = 0, ti; ti = types[i++];) {
-                var eventType = new EventFactory(ti);
-                var array = getListener(el, ti) || [],
-                    item = listener,
-                    l, target;
-                if (eventType.group) {
-                    for (l = array.length - 1; l >= 0; l--) {
-                        target = array[l];
-                        if (isObject(target) && target.group == eventType.group) {
-                            if (item && target.listener === item || !item) {
-                                array.splice(l, 1);
+                var scopes = allscope(el, ti),
+                    key;
+                for (key = 0; key < scopes.length; key++) {
+                    var eventType = new EventFactory(ti);
+                    var currentTi = eventType.isGroup() ? scopes[key] + '.' + ti : ti;
+                    var array = getListener(el, currentTi) || [],
+                        item = listener,
+                        l, target;
+                    if (eventType.group) {
+                        for (l = array.length - 1; l >= 0; l--) {
+                            target = array[l];
+                            if (isObject(target) && target.group == eventType.group) {
+                                if (item && target.listener === item || !item) {
+                                    array.splice(l, 1);
+                                }
+                            }
+                        }
+                    } else {
+                        for (l = array.length - 1; l >= 0; l--) {
+                            target = array[l];
+                            if (isObject(target)) {
+                                if (item && target.listener === item || !item) {
+                                    array.splice(l, 1);
+                                }
+                            } else if (isFunction(target)) {
+                                if (item && array[l] === item || !item) {
+                                    array.splice(l, 1);
+                                }
                             }
                         }
                     }
-                } else {
-                    for (l = array.length - 1; l >= 0; l--) {
-                        target = array[l];
-                        if (isObject(target)) {
-                            if (item && target.listener === item || !item) {
-                                array.splice(l, 1);
-                            }
-                        } else if (isFunction(target)) {
-                            if (item && array[l] === item || !item) {
-                                array.splice(l, 1);
-                            }
-                        }
-
-                    }
+                    if (array.length == 0) { removeListener(el, currentTi);　 }
                 }
-
-                if (array.length == 0) { removeListener(el, ti);　 }
             }
         })
     },

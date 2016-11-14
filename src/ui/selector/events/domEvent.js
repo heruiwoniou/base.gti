@@ -1,4 +1,17 @@
-import EventFactory from '../../core/EventFactory'
+import { EventFactory } from '../../core/event'
+
+export function allscope(element, eventtype) {
+    var result = [];
+    var allscope = element.__allListeners;
+    var event = new EventFactory(eventtype);
+    if (event.isTypeGroup() || event.isType()) {
+        result.push(event.type);
+    }
+    if (event.isGroup()) {
+        for (var key in allscope) result.push(key);
+    }
+    return result;
+}
 
 /**
  * 根据type 获取 dom对象上的事件列表
