@@ -16,7 +16,7 @@ var overwrite = function(to, from) {
     return function Constructor() {
         let result, _super = this.callParent;
         this.callParent = function() {
-            to.apply(this, arguments)
+            return to.apply(this, arguments)
         }
         result = from.apply(this, arguments);
         if (_super) { this.callParent = _super; } else { delete this.callParent; }

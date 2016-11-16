@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+</body>
+<script>
+    window.execScript([ // jshint ignore:line
+        'Function parseVB(code)',
+        'ExecuteGlobal(code)',
+        'End Function' //转换一段文本为VB代码
+    ].join('\r\n'), 'VBScript')
+    var classCode = [
+        'Class Aaaa',
+        'Private [__data__],[__proxy__]',
+        'Public Default Function [__constructor__](cb)',
+        '[__data__]="11"',
+        'Set [__proxy__] = cb',
+        'Set [__constructor__] = Me',
+        'End Function',
+        'Public Property Let [data](val)', //setter
+        'Dim old',
+        'old = [__data__]',
+        '[__data__] = val',
+        'Call [__proxy__](old,val)',
+        'End Property',
+        'Public Property Set [data](val)', //setter
+        'Dim old',
+        'old = [__data__]',
+        '[__data__] = val',
+        'Call [__proxy__](old,val)',
+        'End Property',
+        'Public Property Get [data]',
+        '[data] = [__data__]',
+        'End Property',
+        'End Class'
+    ];
+
+    var factoryCode = [
+        'Function Factory(a)',
+        'Set Factory = (New Aaaa)(a)',
+        'End Function'
+    ]
+
+    var cc = function(oldVal, newVal) { // jshint ignore:line
+        console.log('我改变了值:' + oldVal + '=>' + newVal)
+    }
+    window.parseVB(classCode.join('\r\n'));
+    window.parseVB(factoryCode.join('\r\n'));
+    var b = window['Factory'](cc)
+</script>
+
+</html>

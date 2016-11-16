@@ -7,9 +7,9 @@ import {
 let uid = 0;
 export const Base = Class('ui.core.Base', {
     base: EventBase,
-    constructor(setting) {
+    constructor(data) {
         this.callParent();
-        this.setting = assign({}, setting);
+        this.data = assign({}, data);
         this.uid = uid++;
     }
 })

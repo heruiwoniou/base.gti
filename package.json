@@ -25,6 +25,8 @@
     "gulp-stylus": "^2.5.0",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-commonjs": "^5.0.4",
+    "rollup-plugin-json": "^2.0.2",
+    "rollup-plugin-jsx": "^1.0.3",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-sourcemaps": "^0.4.1"
   }

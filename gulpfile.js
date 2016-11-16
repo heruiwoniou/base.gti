@@ -18,6 +18,8 @@ var
 
     sourcemaps = require('gulp-sourcemaps'),
     rollupsourcemaps = require('rollup-plugin-sourcemaps'),
+    json = require('rollup-plugin-json'),
+    jsx = require('rollup-plugin-jsx'),
     server = require('gulp-ss-server'),
 
     banner =
@@ -38,18 +40,18 @@ gulp.task('lint', function() {
 
 gulp.task('css', function() {
     gulp.run('image');
-    return gulp.src('src/style/*.styl')
+    return gulp.src('./style/control.styl')
         .pipe(stylus({ use: [autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'], cascade: false })] }))
-        .pipe(spriter({
-            'spriteSheet': 'dist/style/images/sprite.png',
-            'pathToSpriteSheetFromCSS': 'images/sprite.png'
-        }))
+        // .pipe(spriter({
+        //     'spriteSheet': 'dist/style/images/sprite.png',
+        //     'pathToSpriteSheetFromCSS': 'images/sprite.png'
+        // }))
         .pipe(gulp.dest('dist/style'));
 })
 
 gulp.task('image', function() {
     return gulp.src([
-        'src/style/images/*.*'
+        './style/images/*.*'
     ]).pipe(gulp.dest('dist/style/images'));
 })
 
@@ -64,14 +66,14 @@ gulp.task('connect', function() {
     });
 });
 
-gulp.task('build', ['lint'], function() {
-    gulp.src(['./src/**/*.js'], { base: 'src' })
+gulp.task('build', /*['lint'],*/ function() {
+    gulp.src(['./src/**/*.js', './src/**/*.jsx', './node_modules/**/*.js'], { base: 'src' })
         //.pipe(sourcemaps.init())
         .pipe(rollup({
             //sourceMap: true,
             entry: './src/index.js',
             format: 'umd',
-            moduleName: 'selector',
+            moduleName: 'WebApi',
             plugins: [
                 resolve({
                     jsnext: true,
@@ -82,6 +84,8 @@ gulp.task('build', ['lint'], function() {
                 babel({
                     exclude: ['node_modules/**', 'bower_components/**']
                 }),
+                json(),
+                jsx({ factory: 'h' })
                 //rollupsourcemaps()
             ]
         }))
@@ -95,12 +99,12 @@ gulp.task('default', ['clean', 'connect'], function() {
     gulp.run('build', 'css');
 
     gulp.watch([
-        ['./src/**/*.js', './node_modules/jquery/dist/jquery.js', './library/**/*.js', './bower_components/**/*.js']
+        ['./src/**/*.js', './src/**/*.jsx']
     ], function() {
         gulp.run('build');
     });
 
-    gulp.watch('src/style/*.styl', function() {
+    gulp.watch('./style/**/*.styl', function() {
         gulp.run('css');
     });
 })

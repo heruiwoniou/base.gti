@@ -16,12 +16,16 @@ export function assign(to, ...froms) {
         for (key in from) {
             toVal = to[key]
             fromVal = from[key]
-            if (!hasOwn(to, key)) {
-                to[key] = fromVal;
-            } else if (isObject(toVal) && isObject(fromVal)) {
+            if (isObject(toVal) && isObject(fromVal)) {
                 assign(toVal, fromVal);
+            } else if (!isObject(fromVal)) {
+                to[key] = fromVal;
+            } else if (isObject(fromVal)) {
+                to[key] = assign({}, fromVal);
             }
         }
     }
     return to
 }
+
+if (!Object.assign) Object.assign = assign;

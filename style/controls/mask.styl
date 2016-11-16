@@ -1,0 +1,40 @@
+set_position()
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+mask()
+	.mask
+		transition: all .2s ease;
+		position: fixed;
+		text-align: center;
+		set_position();
+		.background
+			position: absolute;
+			set_position();
+			background: rgb(255,255,255);
+			background: rgba(255,255,255,.5);
+			filter:unquote('alpha(opacity=50)');
+		&>span
+		&>.loading
+			display: inline-block;
+			vertical-align: middle;
+		&>span
+			height: 100%;
+			width: 1px;
+		&>.loading
+			margin-top: -10%;
+			background: white url(images/loading.gif) no-repeat 12px;
+			border-radius: 4px;
+			box-shadow: 0 3px 10px #777;
+			height: 22px;
+			font-size: 12px;
+			line-height: 22px;
+			padding-left: 62px;
+			text-align: left;
+			padding-right: 12px;
+			text-indent: 12px;
+	@media screen and (max-height:300px)
+		.mask
+			&>.loading
+				margin-top: 0;
