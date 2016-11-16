@@ -1,6 +1,6 @@
-import {assign, isObject} from './../../util'
+import { assign, isObject } from './../../util'
 import Class from '../../core';
-import {ElBase} from '../core/ElBase';
+import { ElBase } from '../core/ElBase';
 export const Mask = Class('ui.control.Mask', {
     base: ElBase,
     constructor(data) {
@@ -13,21 +13,21 @@ export const Mask = Class('ui.control.Mask', {
     render(h, data) {
         return (data.visible
             ? <div className="mask">
-                    <div className="background"></div>
-                    <span></span>
-                    <div className="loading">{data.text}</div>
-                </div>
+                <div className="background"></div>
+                <span></span>
+                <div className="loading">{data.text}</div>
+            </div>
             : null);
     },
     show(data) {
         this.data.visible = true;
-        if (isObject(data)) 
+        if (isObject(data))
             assign(this.data, data);
         this.update();
     },
     hide() {
         this.data.visible = false;
-        if (isObject(data)) 
+        if (isObject(data))
             assign(this.data, data);
         this.update();
     }
