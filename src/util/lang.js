@@ -4,7 +4,7 @@ const VARIABLE_TYPE = {
     NULL: '[object Null]',
     FUNCTION: '[object Function]',
     OBJECT: '[object Object]',
-    ARRAY: '[object Function]',
+    ARRAY: '[object Array]',
     BOOLEAN: '[object Boolean]',
     STRING: '[object String]',
     NUMBER: '[object Number]'
@@ -40,10 +40,6 @@ export function isBoolean() {
         _toString.apply(arguments[0]) === VARIABLE_TYPE.BOOLEAN;
 }
 
-/**
- * @description 检测字符串
- * @return {boolean}
- */
 export function isString() {
     return arguments.length == 0 ? false :
         _toString.apply(arguments[0]) === VARIABLE_TYPE.STRING;
@@ -79,7 +75,7 @@ export const slice = Array.prototype.slice;
 export const splice = Array.prototype.splice;
 
 /**
- * a-a转换为aA
+ * 连线格式字符串转驼峰
  */
 export function propFormat(obj) {
     var str = obj.split(/(-[^-]{1,1})/ig);

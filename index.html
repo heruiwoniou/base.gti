@@ -32,6 +32,14 @@
 </body>
 <script src="dist/index.js"></script>
 <script>
+    WebApi.ready(function() {
+        WebApi.showlayer();
+        window.setTimeout(function() {
+            WebApi.hidelayer();
+        }, 2000)
+    })
+</script>
+<script>
 </script>
 
 </html>

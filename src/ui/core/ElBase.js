@@ -15,7 +15,7 @@ export const ElBase = Class('ui.core.ElBase', {
     },
     elrender(h) {
         return (
-            <div id={ this.uid.toString() }>
+            <div uid={ this.uid.toString() }>
             { this.render.call(this, h, this.data) }
             </div>
         )

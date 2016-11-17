@@ -29,3 +29,4 @@ export function assign(to, ...froms) {
 }
 
 if (!Object.assign) Object.assign = assign;
+if (!Function.prototype.bind) Function.prototype.bind = function(context) { var that = this; return function() { return that.apply(context, arguments); } }
