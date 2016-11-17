@@ -29,7 +29,7 @@ export const Mask = Class('ui.control.Mask', {
             ? <div className="mask" style={{ zIndex:data.zIndex - 2 }}>
                 <div className="background" style={{ zIndex:data.zIndex - 1 }}></div>
                 <span></span>
-                <div className="loading" style={{ zIndex:data.zIndex }}>{ data.text }</div>
+                <div className="loading" onselectstart={function(){ return false; }} style={{ zIndex:data.zIndex }}>{ data.text }</div>
             </div>
             : null);
     },
