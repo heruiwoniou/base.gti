@@ -13,19 +13,19 @@ export const ElBase = Class('ui.core.ElBase', {
         this.rootNode = null;
         this.isInitialize = false;
     },
-    elrender(h) {
+    render(h) {
         return (
             <div uid={ this.uid.toString() }>
-            { this.render.call(this, h, this.data) }
+            { this.template.call(this, h, this.data, this) }
             </div>
         )
     },
-    render(h, data) {
+    template(h, data, scope) {
         return null;
     },
     update() {
         if (this.isInitialize) {
-            var newTree = this.elrender.call(this, h, this.data);
+            var newTree = this.render.call(this, h, this.data, this);
             var patches = diff(this.tree, newTree);
             var rootNode = patch(this.el, patches);
             this.tree = newTree;
@@ -37,7 +37,7 @@ export const ElBase = Class('ui.core.ElBase', {
     },
     initialize() {
         if (this.isInitialize) return this;
-        this.tree = this.elrender.call(this, h, this.data);
+        this.tree = this.render.call(this, h, this.data, this);
         this.el = create(this.tree);
         this.active(this.el);
         this.isInitialize = true;

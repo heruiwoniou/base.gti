@@ -1,0 +1,42 @@
+dialog()
+	.dialog-container
+		text-align: center;
+		height: 80%;
+		white-space: nowrap;
+		width: 90%;
+		margin: 0 auto;
+		& > span
+		& > .dialog
+			display: inline-block;
+			vertical-align middle;
+		& > span
+			width: 1px;
+			height: 100%;
+		& > .dialog
+			max-width: 100%;
+			& > .dialog-head
+				position: relative;
+				& > .dialog-title
+					text-align: center;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					position: absolute;
+					left: 0;
+					top: 0;
+					bottom: 0;
+				& > .dialog-control
+					position: absolute;
+					right: 0;
+					top: 0;
+					& > a
+						display: block;
+			& > .dialog-body
+				max-width: 100%;
+				max-height: 90%;
+				overflow: auto;
+				text-align: initial;
+			.dialog-head
+				background: rgba(red,.5)
+			.dialog-body
+				background: rgba(green,.5)
