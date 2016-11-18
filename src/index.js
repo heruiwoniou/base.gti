@@ -1,3 +1,4 @@
+import './shim';
 import { Mask } from './ui/control/mask.jsx';
 import { Dialog } from './ui/control/dialog.jsx';
 let layer = new Mask({ text: 'HeroControls Loading ...' }).initialize();
