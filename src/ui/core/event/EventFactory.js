@@ -7,7 +7,7 @@ const _type_group = /^[^\.\s]+\.[^\.\s]+$/i;
 const _type = /^[^\.\s]+$/i;
 const _group = /^\.[^\.\s]+$/i;
 
-export const EventFactory = Class('ui.core.EventFactory', {
+export const EventFactory = Class('ui.core.event.EventFactory', {
     constructor(type) {
         type = type.split('.');
         type[0] = type[0].toLowerCase();

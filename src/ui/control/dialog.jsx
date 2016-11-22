@@ -110,8 +110,14 @@ export const Dialog = Class('ui.control.Modal', {
 			</div>
 		);
 	},
+	show(){
+		this.data.visible = true;
+		this.update();
+		return this;
+	},
 	close(){
 		this.data.visible = false;
 		this.update();
+		return this;
 	}
 })
