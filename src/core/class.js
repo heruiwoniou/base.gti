@@ -45,6 +45,7 @@ function setInherit(to, from, deep = 0) {
     return to
 }
 
+
 function Class(sub, options) {
     var sup, name, space, subclassProto, namespace, statics;
     sup = options.base || Object;

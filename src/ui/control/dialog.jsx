@@ -1,12 +1,13 @@
 import Class from '../../core';
 import {ElBase} from '../core/ElBase';
 import {assign} from '../../util';
+import { Promise } from '../core/promise';
 
 export const Dialog = Class('ui.control.Modal', {
 	base: ElBase,
-	constructor(data) {
+	constructor(data = {}) {
 		let private_data = {
-			visible: true,
+			visible: false,
 			controlButtons : [
 				{ className: 'dialog-close', handle: this.close }
 			]
@@ -113,6 +114,8 @@ export const Dialog = Class('ui.control.Modal', {
 	show(){
 		this.data.visible = true;
 		this.update();
+		var promise = new Promise(this);
+		promise.resolve('show');
 		return this;
 	},
 	close(){

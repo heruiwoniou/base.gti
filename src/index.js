@@ -1,11 +1,14 @@
 import './shim';
-import './ui/core/promise/Promise'
 import { Mask } from './ui/control/mask.jsx';
 import { Dialog } from './ui/control/dialog.jsx';
 let layer = new Mask({ text: 'HeroControls Loading ...' }).initialize();
+var instance = new Dialog().initialize();
 export default {
     dialog(setting) {
-        new Dialog(setting).initialize();
+        var a = instance.show(setting);
+        a.then(function() {
+            debugger;
+        })
     },
     ready(fn) {
         window.onload = fn;
