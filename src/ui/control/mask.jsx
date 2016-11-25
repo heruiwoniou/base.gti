@@ -7,14 +7,14 @@ import {assign, isObject, isString} from './../../util'
 var SingletonInstance = null;
 export const Mask = Class('ui.control.Mask', {
     base: ElBase,
-    constructor(data) {
+    constructor(data = {}) {
         let private_data = {
             level: 0,
             zIndex: 10000
         }
         let default_data = {
             visible: false,
-            text: '正在加载...'
+            text: ''
         }
         if (SingletonInstance) {
             assign(SingletonInstance.data, data);
@@ -33,6 +33,7 @@ export const Mask = Class('ui.control.Mask', {
             : null);
     },
     show(data) {
+        this.data.text = '';
         this.data.visible = true;
         if (isString(data)) 
             this.data.text = data;

@@ -1,1 +1,1 @@
-export * from './Promise';
+export * from './Promise'

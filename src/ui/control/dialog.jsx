@@ -1,7 +1,6 @@
 import Class from '../../core';
-import {ElBase} from '../core/ElBase';
-import {assign} from '../../util';
-import { Promise } from '../core/promise';
+import { ElBase } from '../core/ElBase';
+import { assign } from '../../util';
 
 export const Dialog = Class('ui.control.Modal', {
 	base: ElBase,
@@ -114,13 +113,13 @@ export const Dialog = Class('ui.control.Modal', {
 	show(){
 		this.data.visible = true;
 		this.update();
-		var promise = new Promise(this);
-		promise.resolve('show');
+		this.resolve('show');
 		return this;
 	},
 	close(){
 		this.data.visible = false;
 		this.update();
+		this.resolve('close');
 		return this;
 	}
 })

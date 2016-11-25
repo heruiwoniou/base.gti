@@ -1,5 +1,6 @@
 import Class from './../../core';
 import { Base } from './Base';
+import { Promise } from './promise';
 import h from 'virtual-dom/h';
 import diff from 'virtual-dom/diff';
 import patch from 'virtual-dom/patch';
@@ -12,6 +13,7 @@ export const ElBase = Class('ui.core.ElBase', {
         this.tree = null;
         this.rootNode = null;
         this.isInitialize = false;
+        new Promise().promise(this);
     },
     render(h) {
         return (
