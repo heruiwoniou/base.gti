@@ -10,25 +10,6 @@ let rowheight = 18;
 let validDragTime = 100; //毫秒
 let br = '<br>';
 
-function CreateVessel(row, cell) {
-    let arr = [];
-    while (--row >= 0)
-        arr.push({
-            index: row,
-            cell: function(cl) {
-                var c = [];
-                while (--cl >= 0) {
-                    c.push({
-                        index: cl,
-                        rowspan: 0,
-                        colspan: 0
-                    })
-                }
-            }(cell)
-        })
-    return arr;
-}
-
 function render(editor) {
     var arr = [];
     var cellwidth = Math.floor((this.width - this.cell * table_td_lrpadding - (this.cell + 1)) / this.cell);
@@ -50,25 +31,18 @@ function render(editor) {
     return table;
 }
 export const table_mark = 'sheet';
-export default class Table extends Monitor {
+
+export default class Table {
     constructor(editor, row, cell) {
-        var structure = CreateVessel(row, cell)
-        super({
-            data: structure,
-            render: function(e) {
-                return function() {
-                    render.apply(this, arguments);
-                }
-            }(editor)
-        });
         this.uid = table_uid++;
-        this.structure = CreateVessel(row, cell);
         this.row = row;
         this.cell = cell;
         this.editor = editor;
         Editor.plugins.table.instances[this.uid] = this;
         this.caption = false;
         this.width = this.editor.width - 2 * this.editor.padding;
+
+        this._init();
     }
 
     getCaptionHeight() {
@@ -314,8 +288,6 @@ export default class Table extends Monitor {
             arr.push(`</tr>`);
         }
         arr.push(`</table>`);
-
-        this._init();
 
         return arr.join('')
     }

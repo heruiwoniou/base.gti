@@ -101,7 +101,6 @@ export default class Monitor extends EventBase {
     }
 
     $set(key, value) {
-        debugger;
         let scope = this.monitor_uid + '.' + key.replace(/([^.])(\[)/ig, "$1.$2") + '.change';
         this.trigger(scope, value);
     }
